@@ -12,7 +12,7 @@ securing your application and ensuring that it performs well before publishing i
 ## Getting started
 
 1. Clone the project.
-1. Open the solution file `CityBreaks\src\CityBreaks.sln`.
+1. Open the solution file `src\CityBreaks.sln`.
 1. Build the solution.
 1. Press F5 to start the application.
 
@@ -21,6 +21,3 @@ securing your application and ensuring that it performs well before publishing i
 [MIT License](./LICENSE)
 
 Copyright &copy; 2022 Felipe Romero
-
-[build-status]: https://dev.azure.com/feliperomeromx/Projects/_build/latest?definitionId=15&branchName=master
-[build-badge]: https://dev.azure.com/feliperomeromx/Projects/_apis/build/status/feliperomero3.AspNetCoreBook_SportsStore-CI?branchName=master
