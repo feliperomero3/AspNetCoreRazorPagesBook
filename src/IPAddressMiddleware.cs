@@ -1,25 +1,23 @@
 ﻿namespace CityBreaks;
 
-// Middleware that follows the conventions-based approach is created as a singleton
-// when the application first starts up, which means that there is only one instance
-// created for the lifetime of the application.
-// This instance is reused for every request that reaches it.
-public class IPAddressMiddleware
+// The recommended approach to writing new middleware classes
+// involves implementing the IMiddleware interface.
+public class IPAddressMiddleware : IMiddleware
 {
-    private readonly RequestDelegate _next;
+    private readonly ILogger<IPAddressMiddleware> _logger;
 
-    public IPAddressMiddleware(RequestDelegate next)
+    public IPAddressMiddleware(ILogger<IPAddressMiddleware> logger)
     {
-        _next = next;
+        _logger = logger;
     }
 
-    public async Task InvokeAsync(HttpContext context, ILogger<IPAddressMiddleware> logger)
+    public async Task InvokeAsync(HttpContext context, RequestDelegate next)
     {
         var ipAddress = context.Connection.RemoteIpAddress;
 
-        logger.LogInformation("Visitor is from {IPAddress}", ipAddress);
+        _logger.LogInformation("Visitor is from {IPAddress}", ipAddress);
 
-        await _next(context);
+        await next(context);
     }
 }
 
