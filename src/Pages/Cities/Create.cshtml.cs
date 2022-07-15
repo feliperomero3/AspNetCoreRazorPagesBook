@@ -9,15 +9,15 @@ public class CreateModel : PageModel
 
     public void OnGet()
     {
-    }
-
-    public void OnPost()
-    {
-        var cityName = Request.Form["cityName"];
+        var cityName = Request.Query["cityName"];
 
         if (!StringValues.IsNullOrEmpty(cityName))
         {
             Message = $"You submitted {cityName}";
         }
+    }
+
+    public void OnPost()
+    {
     }
 }
