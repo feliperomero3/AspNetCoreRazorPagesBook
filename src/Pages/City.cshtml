@@ -1,7 +1,35 @@
-﻿@page "{cityName=Paris}"
+﻿@page
 @model CityBreaks.Pages.CityModel
 @{
-    ViewData["Title"] = @Model.CityName;
+    ViewData["Title"] = "Select Cities";
 }
 
-<h2>@Model.CityName Details</h2>
+<h4>Select Cities</h4>
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div class="mb-3">
+                @foreach (var city in Model.Cities)
+                {
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="@city.Id" name="SelectedCities" id="@city.Name" />
+                        <label class="form-check-label" for="@city.Name">@city.Name</label>
+                    </div>
+                }
+            </div>
+            <div class="mb-3">
+                <input class="btn btn-primary" type="submit" value="Select" />
+            </div>
+        </form>
+    </div>
+</div>
+@if (Model.SelectedCities.Any())
+{
+    <p>Number of cities selected: @Model.SelectedCities.Count()</p>
+    <ul>
+        @foreach (var city in Model.Cities.Where(c => Model.SelectedCities.Contains(c.Id)))
+        {
+            <li>@city.Name</li>
+        }
+    </ul>
+}
