@@ -1,21 +1,18 @@
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Primitives;
 
 namespace CityBreaks.Pages.Cities;
 
 public class CreateModel : PageModel
 {
-    public string? Message { get; set; }
+    [BindProperty]
+    public string? CityName { get; set; }
 
     public void OnGet()
     {
     }
 
-    public void OnPost(string cityName)
+    public void OnPost()
     {
-        if (!StringValues.IsNullOrEmpty(cityName))
-        {
-            Message = $"You submitted {cityName}";
-        }
     }
 }

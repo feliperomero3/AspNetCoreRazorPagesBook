@@ -15,7 +15,10 @@
         </div>
     </form>
     <div class="mb-3">
-        <p>@Model.Message</p>
+        @if (Request.HasFormContentType && !string.IsNullOrWhiteSpace(Model.CityName))
+        {
+            <p>You submitted @Model.CityName</p>
+        }
     </div>
     <div>
         <ul>
