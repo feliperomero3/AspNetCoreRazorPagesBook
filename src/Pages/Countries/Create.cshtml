@@ -1,0 +1,32 @@
+﻿@page
+@model CityBreaks.Pages.Countries.CreateModel
+@{
+    ViewData["Title"] = "Create Country";
+}
+
+<h4>Create Country</h4>
+
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div class="mb-3">
+                <label class="form-label" for="Input.CountryName">Name</label>
+                <input class="form-control" type="text" name="Input.CountryName" id="Input.CountryName" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="Input.CountryCode">ISO-3166-1 Code</label>
+                <input class="form-control" type="text" name="Input.CountryCode" id="Input.CountryCode" />
+            </div>
+            <div class="mb-3">
+                <input class="btn btn-primary" type="submit" value="Create" />
+            </div>
+        </form>
+    </div>
+</div>
+@if (Model.Country is not null)
+{
+    <p>
+        You submitted @Model.Country.CountryName
+        <img src="~/images/flags/@(Model.Country.CountryCode).png" alt="Country flag" />
+    </p>
+}
