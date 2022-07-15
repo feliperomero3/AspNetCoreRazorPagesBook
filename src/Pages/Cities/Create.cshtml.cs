@@ -11,10 +11,8 @@ public class CreateModel : PageModel
     {
     }
 
-    public void OnPost()
+    public void OnPost(string cityName)
     {
-        var cityName = Request.Query["cityName"];
-
         if (!StringValues.IsNullOrEmpty(cityName))
         {
             Message = $"You submitted {cityName}";
