@@ -5,7 +5,7 @@
 }
 
 <div class="col-4">
-    <form method="get">
+    <form method="post">
         <div class="mb-3">
             <label for="cityName">Enter City name</label>
             <input class="form-control" type="text" name="cityName" id="cityName" />
@@ -14,7 +14,18 @@
             <button class="btn btn-primary" type="submit">Submit</button>
         </div>
     </form>
-    <div>
+    <div class="mb-3">
         <p>@Model.Message</p>
+    </div>
+    <div>
+        <ul>
+            @if (Request.HasFormContentType)
+            {
+                foreach (var item in Request.Form)
+                {
+                    <li>@item.Key: @Request.Form[item.Key]</li>
+                }
+            }
+        </ul>
     </div>
 </div>
