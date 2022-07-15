@@ -1,3 +1,4 @@
+using System.Linq;
 using CityBreaks.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -7,9 +8,9 @@ namespace CityBreaks.Pages.Countries
     public class CreateModel : PageModel
     {
         [BindProperty]
-        public InputModel? Input { get; set; }
+        public IEnumerable<InputModel>? Inputs { get; set; }
 
-        public Country? Country { get; set; }
+        public IEnumerable<Country>? Countries { get; set; } = new List<Country>();
 
         public class InputModel
         {
@@ -23,11 +24,14 @@ namespace CityBreaks.Pages.Countries
 
         public void OnPost()
         {
-            Country = new Country
-            {
-                CountryCode = Input?.CountryCode,
-                CountryName = Input?.CountryName
-            };
+            Countries = Inputs?
+                .Where(c => !string.IsNullOrWhiteSpace(c.CountryCode))
+                .Select(c => new Country
+                {
+                    CountryCode = c.CountryCode,
+                    CountryName = c.CountryName
+                })
+                .ToList();
         }
     }
 }

@@ -7,26 +7,47 @@
 <h4>Create Country</h4>
 
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-8">
         <form method="post">
-            <div class="mb-3">
-                <label class="form-label" for="Input.CountryName">Name</label>
-                <input class="form-control" type="text" name="Input.CountryName" id="Input.CountryName" />
-            </div>
-            <div class="mb-3">
-                <label class="form-label" for="Input.CountryCode">ISO-3166-1 Code</label>
-                <input class="form-control" type="text" name="Input.CountryCode" id="Input.CountryCode" />
-            </div>
+            <table class="table table-borderless">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>ISO-3166-1 Code</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < 5; i++)
+                    {
+                        <tr>
+                            <td class="w-75">
+                                <input class="form-control" type="text" name="Inputs[@i].CountryName" value="" />
+                            </td>
+                            <td class="w-25">
+                                <input class="form-control" type="text" name="Inputs[@i].CountryCode" value="" />
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
             <div class="mb-3">
                 <input class="btn btn-primary" type="submit" value="Create" />
             </div>
         </form>
     </div>
 </div>
-@if (Model.Country is not null)
+@if (Model.Countries is not null && Model.Countries.Any())
 {
     <p>
-        You submitted @Model.Country.CountryName
-        <img src="~/images/flags/@(Model.Country.CountryCode).png" alt="Country flag" />
+        You submitted the following
     </p>
+    <ul>
+        @foreach (var country in Model.Countries)
+        {
+            <li>
+                <img src="~/images/flags/@(country.CountryCode).png" alt="Country flag" />
+                @country.CountryName
+            </li>
+        }
+    </ul>
 }
