@@ -1,6 +1,7 @@
 ﻿@page "{cityName=Paris}"
 @model CityBreaks.Pages.CityModel
 @{
+    ViewData["Title"] = @Model.CityName;
 }
 
 <h2>@Model.CityName Details</h2>
