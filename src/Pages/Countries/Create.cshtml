@@ -10,12 +10,14 @@
     <div class="col-md-4">
         <form method="post">
             <div class="mb-3">
-                <label class="form-label" for="Input.CountryName">Name</label>
-                <input class="form-control" type="text" name="Input.CountryName" id="Input.CountryName" />
+                <label class="form-label" asp-for="Input.CountryName">Name</label>
+                <input class="form-control" asp-for="Input.CountryName" />
+                <span class="text-danger" asp-validation-for="Input.CountryName"></span>
             </div>
             <div class="mb-3">
-                <label class="form-label" for="Input.CountryCode">ISO-3166-1 Code</label>
-                <input class="form-control" type="text" name="Input.CountryCode" id="Input.CountryCode" />
+                <label class="form-label" asp-for="Input.CountryCode">ISO-3166-1 Code</label>
+                <input class="form-control" asp-for="Input.CountryCode" />
+                <span class="text-danger" asp-validation-for="Input.CountryCode"></span>
             </div>
             <div class="mb-3">
                 <input class="btn btn-primary" type="submit" value="Create" />
@@ -23,10 +25,14 @@
         </form>
     </div>
 </div>
-@if (Model.Country is not null)
+@if (!string.IsNullOrEmpty(Model.Country.CountryCode) && !string.IsNullOrEmpty(Model.Country.CountryName))
 {
     <p>
         You submitted @Model.Country.CountryName
         <img src="~/images/flags/@(Model.Country.CountryCode).png" alt="Country flag" />
     </p>
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
 }
