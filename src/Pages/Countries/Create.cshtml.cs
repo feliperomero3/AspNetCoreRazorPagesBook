@@ -17,7 +17,8 @@ namespace CityBreaks.Pages.Countries
             [Required]
             public string? CountryName { get; set; }
 
-            [Required, StringLength(2, MinimumLength = 2)]
+            [Required]
+            [StringLength(2, MinimumLength = 2, ErrorMessage = "You must provide a valid two character ISO 3166-1 code.")]
             public string? CountryCode { get; set; }
         }
 
