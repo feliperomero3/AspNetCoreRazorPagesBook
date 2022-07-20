@@ -12,6 +12,12 @@ namespace CityBreaks.Pages.Countries
 
         public Country Country { get; set; } = new();
 
+        [TempData]
+        public string? CountryCode { get; set; }
+
+        [TempData]
+        public string? CountryName { get; set; }
+
         public class InputModel
         {
             [Required]
@@ -26,13 +32,23 @@ namespace CityBreaks.Pages.Countries
         {
         }
 
-        public void OnPost()
+        public ActionResult OnPost()
         {
-            Country = new Country
+            if (ModelState.IsValid)
             {
-                CountryCode = Input.CountryCode,
-                CountryName = Input.CountryName
-            };
+                Country = new Country
+                {
+                    CountryCode = Input.CountryCode,
+                    CountryName = Input.CountryName
+                };
+
+                CountryCode = Country.CountryCode;
+                CountryName = Country.CountryName;
+
+                return RedirectToPage("/Countries/Success");
+            }
+
+            return Page();
         }
     }
 }

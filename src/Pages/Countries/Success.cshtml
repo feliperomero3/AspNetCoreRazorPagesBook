@@ -1,0 +1,12 @@
+﻿@page
+@model CityBreaks.Pages.Countries.SuccessModel
+@{
+    ViewData["Title"] = "Country Created Successfully";
+}
+
+<h1>Success!</h1>
+<p>Your form submission was completed. You submitted:</p>
+<p>
+     @TempData["CountryName"]
+    <img src="/images/flags/@(TempData["CountryCode"]).png" />
+</p>
