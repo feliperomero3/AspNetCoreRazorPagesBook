@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using CityBreaks.Models;
+using CityBreaks.ValidationAttributes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -20,7 +21,7 @@ namespace CityBreaks.Pages.Countries
 
         public class InputModel
         {
-            [Required]
+            [Required, CompareFirstLetter(OtherProperty = nameof(CountryCode))]
             public string? CountryName { get; set; }
 
             [Required]
@@ -34,12 +35,6 @@ namespace CityBreaks.Pages.Countries
 
         public ActionResult OnPost()
         {
-            if (!string.IsNullOrWhiteSpace(Input.CountryName) &&
-                !string.IsNullOrWhiteSpace(Input.CountryCode) &&
-                Input.CountryName.ToLower().First() != Input.CountryCode.ToLower().First())
-            {
-                ModelState.AddModelError(string.Empty, "The first letters of the name and code must match.");
-            }
             if (ModelState.IsValid)
             {
                 Country = new Country
