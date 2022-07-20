@@ -34,16 +34,22 @@ namespace CityBreaks.Pages.Countries
 
         public ActionResult OnPost()
         {
+            if (!string.IsNullOrWhiteSpace(Input.CountryName) &&
+                !string.IsNullOrWhiteSpace(Input.CountryCode) &&
+                Input.CountryName.ToLower().First() != Input.CountryCode.ToLower().First())
+            {
+                ModelState.AddModelError(string.Empty, "The first letters of the name and code must match.");
+            }
             if (ModelState.IsValid)
             {
                 Country = new Country
                 {
-                    CountryCode = Input.CountryCode,
-                    CountryName = Input.CountryName
+                    CountryName = Input.CountryName,
+                    CountryCode = Input.CountryCode
                 };
 
-                CountryCode = Country.CountryCode;
                 CountryName = Country.CountryName;
+                CountryCode = Country.CountryCode;
 
                 return RedirectToPage("/Countries/Success");
             }
