@@ -1,20 +1,53 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.ComponentModel.DataAnnotations;
+using CityBreaks.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace CityBreaks.Pages
+namespace CityBreaks.Pages;
+
+public class IndexModel : PageModel
 {
-    public class IndexModel : PageModel
+    [BindProperty]
+    [Display(Name = "Cities")]
+    public int[] SelectedCities { get; set; } = new[] { 0 };
+
+    public SelectList? Cities { get; set; }
+
+    public string Message { get; set; } = string.Empty;
+
+    public void OnGet()
     {
-        private readonly ILogger<IndexModel> _logger;
+        Cities = GetCityOptions();
+    }
 
-        public IndexModel(ILogger<IndexModel> logger)
+    public void OnPost()
+    {
+        Cities = GetCityOptions();
+
+        if (ModelState.IsValid)
         {
-            _logger = logger;
-        }
+            var cityIds = SelectedCities.Select(x => x.ToString());
+            var cities = GetCityOptions().Where(o => cityIds.Contains(o.Value)).Select(o => o.Text);
 
-        public void OnGet()
+            Message = $"You selected {string.Join(", ", cities)}.";
+        }
+    }
+
+    private static SelectList GetCityOptions()
+    {
+        var cities = new City[]
         {
+            new City { Id = 1, Name = "London" },
+            new City { Id = 2, Name = "New York" },
+            new City { Id = 3, Name = "Paris" },
+            new City { Id = 4, Name = "Berlin" },
+            new City { Id = 5, Name = "Rome" },
+            new City { Id = 6, Name = "Dublin" }
+        };
 
-        }
+        var citiesOptions = new SelectList(cities, nameof(City.Id), nameof(City.Name));
+
+        return citiesOptions;
     }
 }
