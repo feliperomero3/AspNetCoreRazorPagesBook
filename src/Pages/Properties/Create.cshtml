@@ -6,9 +6,10 @@
 
 @if (Request.HasFormContentType)
 {
-    <p>You selected @Model.SelectedCity.</p>
+    <p>@Model.Message</p>
 }
 <form method="post">
+    <div class="text-danger" asp-validation-summary="All"></div>
     <div class="mb-3">
         <label class="form-label" asp-for="SelectedCity"></label>
         <select class="form-select" asp-for="SelectedCity" asp-items="Model.Cities"></select>
