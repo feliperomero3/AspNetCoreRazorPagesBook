@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace CityBreaks.Pages.Properties;
 
@@ -26,7 +27,14 @@ public class CreateModel : PageModel
     [Display(Name = "Available From")]
     public DateTime AvailableFrom { get; set; }
 
+    [BindProperty]
+    [Display(Name = "City")]
+    public string SelectedCity { get; set; } = string.Empty;
+
+    public SelectList? Cities { get; set; }
+
     public void OnGet()
     {
+        Cities = new SelectList(new[] { "London", "New York", "Paris", "Berlin", "Rome" });
     }
 }
