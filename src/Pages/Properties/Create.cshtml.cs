@@ -57,15 +57,21 @@ public class CreateModel : PageModel
     {
         var cities = new City[]
         {
-            new City { Id = 1, Name = "London" },
-            new City { Id = 2, Name = "New York" },
-            new City { Id = 3, Name = "Paris" },
-            new City { Id = 4, Name = "Berlin" },
-            new City { Id = 5, Name = "Rome" },
-            new City { Id = 6, Name = "Dublin" }
+            new City { Id = 1, Name = "London", CountryName = "United Kingdom" },
+            new City { Id = 2, Name = "New York", CountryName = "United States" },
+            new City { Id = 3, Name = "Paris", CountryName = "France" },
+            new City { Id = 4, Name = "Berlin", CountryName = "Germany" },
+            new City { Id = 5, Name = "Rome", CountryName = "Italy" },
+            new City { Id = 6, Name = "Dublin", CountryName = "Ireland" },
+            new City { Id = 7, Name = "York", CountryName = "United Kingdom" },
+            new City { Id = 8, Name = "Las Vegas", CountryName = "United States" },
+            new City { Id = 9, Name = "Munich", CountryName = "Germany" },
+            new City { Id = 10, Name = "Dortmund", CountryName = "Germany" },
+            new City { Id = 11, Name = "Venice", CountryName = "Italy" },
+            new City { Id = 11, Name = "Florencia", CountryName = "Italy" }
         };
 
-        var citiesOptions = new SelectList(cities, nameof(City.Id), nameof(City.Name));
+        var citiesOptions = new SelectList(cities, nameof(City.Id), nameof(City.Name), null, nameof(City.CountryName));
 
         return citiesOptions;
     }
