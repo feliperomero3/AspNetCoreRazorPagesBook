@@ -34,9 +34,21 @@
         <input class="form-check-input" asp-for="IsSmokingPermitted" />
         <label class="form-check-label" asp-for="IsSmokingPermitted"></label>
     </div>
+    <p>Rating</p>
     <div class="mb-3">
-        <label asp-for="Rating"></label>
-        <select class="form-select" asp-for="Rating" asp-items="Html.GetEnumSelectList<Rating>()"></select>
+        @{
+            var items = Html.GetEnumSelectList<Rating>();
+            var firstItem = items.First();
+            
+            foreach (var option in items)
+            {
+                var isChecked = option.Value == firstItem.Value;
+                <div class="form-check">
+                    <input class="form-check-input" asp-for="Rating" id="rating-@option.Value" type="radio" value="@option.Value" checked="@isChecked">
+                    <label class="form-check-label" for="rating-@option.Value">@option.Text</label>
+                </div>
+            }
+        }
     </div>
     <div class="mb-3">
         <button class="btn btn-primary">
