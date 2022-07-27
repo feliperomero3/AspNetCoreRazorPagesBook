@@ -32,6 +32,9 @@ public class CreateModel : PageModel
     [Display(Name = "City")]
     public int SelectedCity { get; set; }
 
+    [BindProperty]
+    public Rating Rating { get; set; }
+
     public SelectList? Cities { get; set; }
 
     public string Message { get; private set; } = string.Empty;

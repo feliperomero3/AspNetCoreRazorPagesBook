@@ -35,6 +35,10 @@
         <label class="form-check-label" asp-for="IsSmokingPermitted"></label>
     </div>
     <div class="mb-3">
+        <label asp-for="Rating"></label>
+        <select class="form-select" asp-for="Rating" asp-items="Html.GetEnumSelectList<Rating>()"></select>
+    </div>
+    <div class="mb-3">
         <button class="btn btn-primary">
             Submit
         </button>
