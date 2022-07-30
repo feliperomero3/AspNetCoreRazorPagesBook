@@ -4,31 +4,26 @@
     ViewData["Title"] = "Create City";
 }
 
-<div class="col-4">
-    <form method="post">
+<h4>Create City</h4>
+
+<div class="col-6">
+    <form method="post" enctype="multipart/form-data">
         <div class="mb-3">
-            <label for="cityName">Enter City name</label>
-            <input class="form-control" type="text" name="cityName" id="cityName" />
+            <label class="form-label" asp-for="CityName"></label>
+            <input class="form-control" asp-for="CityName" />
+            <span class="text-danger" asp-validation-for="CityName"></span>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" asp-for="UploadedFile"></label>
+            <input class="form-control" asp-for="UploadedFile" accept="image/png, image/jpeg" />
+            <span class="text-danger" asp-validation-for="UploadedFile"></span>
         </div>
         <div class="mb-3">
             <button class="btn btn-primary" type="submit">Submit</button>
         </div>
     </form>
-    <div class="mb-3">
-        @if (Request.HasFormContentType && !string.IsNullOrWhiteSpace(Model.CityName))
-        {
-            <p>You submitted @Model.CityName</p>
-        }
-    </div>
-    <div>
-        <ul>
-            @if (Request.HasFormContentType)
-            {
-                foreach (var item in Request.Form)
-                {
-                    <li>@item.Key: @Request.Form[item.Key]</li>
-                }
-            }
-        </ul>
-    </div>
 </div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
