@@ -1,0 +1,15 @@
+﻿@page
+@model CityBreaks.Pages.Cities.SuccessModel
+@{
+    ViewData["Title"] = "City Created Successfully";
+}
+
+<h1>Success!</h1>
+
+@if (TempData["CityName"] is not null)
+{
+    <div class="col-6">
+        <h3>@TempData["CityName"]</h3>
+        <img src="/images/cities/@TempData["FileName"]" class="img-fluid" alt="@TempData["CityName"]" />
+    </div>
+}
