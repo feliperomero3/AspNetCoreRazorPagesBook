@@ -7,10 +7,12 @@ namespace CityBreaks.Pages.Cities;
 
 public class CreateModel : PageModel
 {
+    private readonly IWebHostEnvironment _environment;
     private readonly ILogger<CreateModel> _logger;
 
-    public CreateModel(ILogger<CreateModel> logger)
+    public CreateModel(IWebHostEnvironment environment, ILogger<CreateModel> logger)
     {
+        _environment = environment;
         _logger = logger;
     }
 
@@ -45,14 +47,14 @@ public class CreateModel : PageModel
 
             _logger.LogInformation("FileName is {FileName}", FileName);
 
-            var filePath = Path.Combine("images", "cities", FileName);
+            var filePath = Path.Combine(_environment.WebRootPath, "images", "cities", FileName);
 
             _logger.LogInformation("filePath is {filePath}", filePath);
 
             using var stream = System.IO.File.Create(filePath);
             await UploadedFile.CopyToAsync(stream);
 
-            return RedirectToPage("/Cities/Index");
+            return RedirectToPage("/Cities/Success");
         }
         return Page();
     }
