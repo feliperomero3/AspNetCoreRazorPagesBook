@@ -18,7 +18,7 @@ namespace CityBreaks.Pages
             new City { Id = 5, Name = "Dublin" }
         };
 
-        public void OnGet(string cityName)
+        public void OnGet()
         {
         }
     }
