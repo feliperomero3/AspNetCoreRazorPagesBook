@@ -3,11 +3,19 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using CityBreaks.Models;
+using CityBreaks.Services;
 
 namespace CityBreaks.Pages.Properties;
 
 public class CreateModel : PageModel
 {
+    private readonly SimpleCityService _cityService;
+
+    public CreateModel(SimpleCityService cityService)
+    {
+        _cityService = cityService ?? throw new ArgumentNullException(nameof(cityService));
+    }
+
     [BindProperty]
     public string Name { get; set; } = string.Empty;
 
@@ -39,14 +47,14 @@ public class CreateModel : PageModel
 
     public string Message { get; private set; } = string.Empty;
 
-    public void OnGet()
+    public async void OnGet()
     {
-        Cities = GetCityOptions();
+        Cities = await GetCityOptions();
     }
 
-    public void OnPost()
+    public async void OnPost()
     {
-        Cities = GetCityOptions();
+        Cities = await GetCityOptions();
 
         if (ModelState.IsValid)
         {
@@ -56,25 +64,11 @@ public class CreateModel : PageModel
         }
     }
 
-    private static SelectList GetCityOptions()
+    private async Task<SelectList> GetCityOptions()
     {
-        var cities = new City[]
-        {
-            new City { Id = 1, Name = "London", CountryName = "United Kingdom" },
-            new City { Id = 2, Name = "New York", CountryName = "United States" },
-            new City { Id = 3, Name = "Paris", CountryName = "France" },
-            new City { Id = 4, Name = "Berlin", CountryName = "Germany" },
-            new City { Id = 5, Name = "Rome", CountryName = "Italy" },
-            new City { Id = 6, Name = "Dublin", CountryName = "Ireland" },
-            new City { Id = 7, Name = "York", CountryName = "United Kingdom" },
-            new City { Id = 8, Name = "Las Vegas", CountryName = "United States" },
-            new City { Id = 9, Name = "Munich", CountryName = "Germany" },
-            new City { Id = 10, Name = "Dortmund", CountryName = "Germany" },
-            new City { Id = 11, Name = "Venice", CountryName = "Italy" },
-            new City { Id = 11, Name = "Florencia", CountryName = "Italy" }
-        };
+        var cities = await _cityService.GetAllAsync();
 
-        var citiesOptions = new SelectList(cities, nameof(City.Id), nameof(City.Name), null, nameof(City.CountryName));
+        var citiesOptions = new SelectList(cities, nameof(City.Id), nameof(City.Name), null, "Country.CountryName");
 
         return citiesOptions;
     }
