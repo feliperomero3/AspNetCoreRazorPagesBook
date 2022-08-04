@@ -15,6 +15,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddScoped<IPAddressMiddleware>();
 
 builder.Services.AddScoped<SimpleCityService>();
+builder.Services.AddSingleton<LifetimeDemoService>();
 
 var app = builder.Build();
 
