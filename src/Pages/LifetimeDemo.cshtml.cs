@@ -5,21 +5,17 @@ namespace CityBreaks.Pages;
 
 public class LifetimeDemoModel : PageModel
 {
-    private readonly LifetimeDemoService _demoService;
-    private readonly LifetimeDemoService _secondService;
+    private readonly SingletonService _demoService;
 
-    public LifetimeDemoModel(LifetimeDemoService demoService, LifetimeDemoService secondService)
+    public LifetimeDemoModel(SingletonService demoService)
     {
         _demoService = demoService;
-        _secondService = secondService;
     }
 
     public Guid Value { get; private set; }
-    public Guid SecondValue { get; private set; }
 
     public void OnGet()
     {
-        Value = _demoService.Value;
-        SecondValue = _secondService.Value;
+        Value = _demoService.DependencyValue;
     }
 }
