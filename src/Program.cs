@@ -1,12 +1,18 @@
 using System.Globalization;
 using CityBreaks;
+using CityBreaks.Data;
 using CityBreaks.Services;
+using Microsoft.EntityFrameworkCore;
 
 CultureInfo.DefaultThreadCurrentCulture = new("en-US");
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddRazorPages();
+builder.Services.AddDbContext<CityBreaksContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
 
 // This middleware is registered in exactly the same way as the conventions-based example,
 // via the UseMiddleware methods or an extension method.
