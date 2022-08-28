@@ -15,7 +15,7 @@ public class CountryConfiguration : IEntityTypeConfiguration<Country>
         {
             new Country { Id = 1, CountryName = "Croatia", CountryCode = "HR" },
             new Country { Id = 2, CountryName = "Denmark", CountryCode = "DK" },
-            new Country { Id = 3, CountryName = "France", CountryCode = "fr" },
+            new Country { Id = 3, CountryName = "France", CountryCode = "FR" },
             new Country { Id = 4, CountryName = "Germany", CountryCode = "DE" },
             new Country { Id = 5, CountryName = "Netherlands", CountryCode = "NL" },
             new Country { Id = 6, CountryName = "Italy", CountryCode = "IT" },
