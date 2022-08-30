@@ -8,6 +8,8 @@ public class PropertyConfiguration : IEntityTypeConfiguration<Property>
 {
     public void Configure(EntityTypeBuilder<Property> builder)
     {
+        builder.Property(p => p.DayRate).HasColumnType("decimal(8, 2)");
+
         builder.HasData(new List<Property>
         {
             new Property { Id = 1, CityId = 10, MaxNumberOfGuests = 1, DayRate = 81.00m, Name = "Hotel Paris", Address = "Rue de Reynard" },
