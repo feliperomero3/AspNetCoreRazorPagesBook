@@ -12,11 +12,10 @@ public class CityService
 
     public async Task<List<City>> GetAllAsync()
     {
-        var cities = await _context.Cities!
+        var cities = _context.Cities!
             .Include(c => c.Country)
-            .Include(c => c.Properties.Where(p => p.AvailableFrom < DateTime.Now))
-            .ToListAsync();
+            .Include(c => c.Properties.Where(p => p.AvailableFrom < DateTime.Now));
 
-        return cities;
+        return await cities.ToListAsync();
     }
 }

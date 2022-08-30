@@ -23,8 +23,15 @@ builder.Services.AddScoped<IPAddressMiddleware>();
 builder.Services.AddScoped<SimpleCityService>();
 builder.Services.AddTransient<LifetimeDemoService>();
 builder.Services.AddSingleton<SingletonService>();
+builder.Services.AddScoped<CityService>();
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var cityBreaksContext = scope.ServiceProvider.GetRequiredService<CityBreaksContext>();
+    cityBreaksContext.Database.EnsureCreated();
+}
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
