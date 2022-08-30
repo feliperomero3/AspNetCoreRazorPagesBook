@@ -20,7 +20,6 @@ builder.Services.AddDbContext<CityBreaksContext>(options =>
 // they must also be registered with the application's service container.
 builder.Services.AddScoped<IPAddressMiddleware>();
 
-builder.Services.AddScoped<SimpleCityService>();
 builder.Services.AddTransient<LifetimeDemoService>();
 builder.Services.AddSingleton<SingletonService>();
 builder.Services.AddScoped<CityService>();
