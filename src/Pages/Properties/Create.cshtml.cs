@@ -9,9 +9,9 @@ namespace CityBreaks.Pages.Properties;
 
 public class CreateModel : PageModel
 {
-    private readonly SimpleCityService _cityService;
+    private readonly CityService _cityService;
 
-    public CreateModel(SimpleCityService cityService)
+    public CreateModel(CityService cityService)
     {
         _cityService = cityService ?? throw new ArgumentNullException(nameof(cityService));
     }
