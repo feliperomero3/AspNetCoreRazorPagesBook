@@ -14,7 +14,7 @@ public class CityConfiguration : IEntityTypeConfiguration<City>
         builder.HasData(new List<City>
         {
             new City { Id = 1, Name = "Amsterdam", CountryId = 5, Image = "amsterdam.jpg" },
-            new City { Id = 2, Name = "Barcelona", CountryId = 7, Image ="barcelona.jpg" },
+            new City { Id = 2, Name = "Barcelona", CountryId = 7, Image = "barcelona.jpg" },
             new City { Id = 3, Name = "Berlin", CountryId = 4, Image = "berlin.jpg" },
             new City { Id = 4, Name = "Copenhagen", CountryId = 2, Image = "copenhagen.jpg" },
             new City { Id = 5, Name = "Dubrovnik", CountryId = 1, Image = "dubrovnik.jpg" },

@@ -10,4 +10,5 @@ public class Property
     public bool IsSmokingPermitted { get; set; }
     public DateTime AvailableFrom { get; set; }
     public City? City { get; set; }
+    public int CityId { get; set; }
 }
