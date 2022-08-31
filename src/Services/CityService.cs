@@ -18,4 +18,17 @@ public class CityService
 
         return await cities.ToListAsync();
     }
+
+    public async Task<City?> GetByNameAsync(string name)
+    {
+        if (name is null)
+        {
+            throw new ArgumentNullException(nameof(name));
+        }
+
+        return await _context.Cities!
+            .Include(c => c.Country)
+            .Include(c => c.Properties.Where(p => p.AvailableFrom < DateTime.Now))
+            .SingleOrDefaultAsync(c => c.Name == name);
+    }
 }

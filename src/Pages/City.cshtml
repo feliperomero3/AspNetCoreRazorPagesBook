@@ -1,35 +1,31 @@
-﻿@page
+﻿@page "{name}"
 @model CityBreaks.Pages.CityModel
 @{
-    ViewData["Title"] = "Select Cities";
+    ViewData["Title"] = $"{Model.City?.Name} Details";
 }
 
-<h4>Select Cities</h4>
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div class="mb-3">
-                @foreach (var city in Model.Cities)
-                {
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="@city.Id" name="SelectedCities" id="@city.Name" />
-                        <label class="form-check-label" for="@city.Name">@city.Name</label>
-                    </div>
-                }
-            </div>
-            <div class="mb-3">
-                <input class="btn btn-primary" type="submit" value="Select" />
-            </div>
-        </form>
-    </div>
-</div>
-@if (Model.SelectedCities.Any())
+@if (Model.City is null)
 {
-    <p>Number of cities selected: @Model.SelectedCities.Count()</p>
-    <ul>
-        @foreach (var city in Model.Cities.Where(c => Model.SelectedCities.Contains(c.Id)))
-        {
-            <li>@city.Name</li>
-        }
-    </ul>
+    <p class="">City not found.</p>
+}
+else
+{
+    <h3>@Model.City.Name</h3>
+
+    @foreach (var property in Model.City.Properties)
+    {
+        <div class="mb-3">
+            <h5>@property.Name</h5>
+            <p class="mb-1">@property.Address</p>
+            <i class="fas fa-euro-sign text-muted"></i> @property.DayRate.ToString("C")<br>
+            @if (!property.IsSmokingPermitted)
+            {
+                <i class="fas fa-smoking-ban text-danger"></i>
+            }
+            @for (var i = 1; i <= property.MaxNumberOfGuests; i++)
+            {
+                <i class="fas fa-bed text-info"></i>
+            }
+        </div>
+    }
 }
