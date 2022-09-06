@@ -1,11 +1,11 @@
 ﻿@page
-@model CityBreaks.Pages.Properties.CreateModel
+@model CityBreaks.Pages.Properties.EditModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Edit";
 }
 
-<h1>Create</h1>
+<h1>Edit</h1>
 
 <h4>Property</h4>
 <hr />
@@ -13,6 +13,7 @@
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Property.Id" />
             <div class="form-group">
                 <label asp-for="Property.Name" class="control-label"></label>
                 <input asp-for="Property.Name" class="form-control" />
@@ -45,17 +46,18 @@
             </div>
             <div class="form-group">
                 <label asp-for="Property.CityId" class="control-label"></label>
-                <select asp-for="Property.CityId" class ="form-control" asp-items="ViewBag.CityId"></select>
+                <select asp-for="Property.CityId" class="form-control" asp-items="ViewBag.CityId"></select>
+                <span asp-validation-for="Property.CityId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-page="Index">Back to List</a>
+    <a asp-page="./Index">Back to List</a>
 </div>
 
 @section Scripts {
