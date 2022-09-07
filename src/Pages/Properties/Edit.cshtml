@@ -1,8 +1,8 @@
-﻿@page
+﻿@page "{id:int}"
 @model CityBreaks.Pages.Properties.EditModel
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit Property";
 }
 
 <h1>Edit</h1>
@@ -13,40 +13,39 @@
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Property.Id" />
             <div class="mb-3">
-                <label asp-for="Property.Name" class="form-label"></label>
-                <input asp-for="Property.Name" class="form-control" />
-                <span asp-validation-for="Property.Name" class="text-danger"></span>
+                <label asp-for="Name" class="form-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="mb-3">
-                <label asp-for="Property.Address" class="form-label"></label>
-                <input asp-for="Property.Address" class="form-control" />
-                <span asp-validation-for="Property.Address" class="text-danger"></span>
+                <label asp-for="Address" class="form-label"></label>
+                <input asp-for="Address" class="form-control" />
+                <span asp-validation-for="Address" class="text-danger"></span>
             </div>
             <div class="mb-3">
-                <label asp-for="Property.MaxNumberOfGuests" class="form-label"></label>
-                <input asp-for="Property.MaxNumberOfGuests" class="form-control" />
-                <span asp-validation-for="Property.MaxNumberOfGuests" class="text-danger"></span>
+                <label asp-for="MaxNumberOfGuests" class="form-label"></label>
+                <input asp-for="MaxNumberOfGuests" class="form-control" />
+                <span asp-validation-for="MaxNumberOfGuests" class="text-danger"></span>
             </div>
             <div class="mb-3">
-                <label asp-for="Property.DayRate" class="form-label"></label>
-                <input asp-for="Property.DayRate" class="form-control" />
-                <span asp-validation-for="Property.DayRate" class="text-danger"></span>
+                <label asp-for="DayRate" class="form-label"></label>
+                <input asp-for="DayRate" class="form-control" />
+                <span asp-validation-for="DayRate" class="text-danger"></span>
             </div>
             <div class="mb-3 form-check">
-                <input class="form-check-input" asp-for="Property.IsSmokingPermitted" />
-                <label class="form-check-label" asp-for="Property.IsSmokingPermitted"></label>
+                <input class="form-check-input" asp-for="IsSmokingPermitted" />
+                <label class="form-check-label" asp-for="IsSmokingPermitted"></label>
             </div>
             <div class="mb-3">
-                <label asp-for="Property.AvailableFrom" class="form-label"></label>
-                <input asp-for="Property.AvailableFrom" class="form-control" />
-                <span asp-validation-for="Property.AvailableFrom" class="text-danger"></span>
+                <label asp-for="AvailableFrom" class="form-label"></label>
+                <input asp-for="AvailableFrom" class="form-control" />
+                <span asp-validation-for="AvailableFrom" class="text-danger"></span>
             </div>
             <div class="mb-3">
-                <label asp-for="Property.CityId" class="form-label"></label>
-                <select asp-for="Property.CityId" class="form-select" asp-items="ViewBag.CityId"></select>
-                <span asp-validation-for="Property.CityId" class="text-danger"></span>
+                <label asp-for="CityId" class="form-label"></label>
+                <select asp-for="CityId" class="form-select" asp-items="Model.Cities"></select>
+                <span asp-validation-for="CityId" class="text-danger"></span>
             </div>
             <div class="mb-3">
                 <input type="submit" value="Save" class="btn btn-primary" />
