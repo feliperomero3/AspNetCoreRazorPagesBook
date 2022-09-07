@@ -5,7 +5,7 @@ Based on the Web Application built in the Book 'ASP.NET Core Razor Pages in Acti
 City Breaks is a web application for booking short holidays. It covers the topics of using forms and working with data,
 securing your application and ensuring that it performs well before publishing it.
 
-![Home page](./cover-mini.png)
+![Home page](./assets/cover-mini.png)
 
 ## Prerequisites
 
