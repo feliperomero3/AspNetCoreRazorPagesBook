@@ -3,26 +3,27 @@ using Microsoft.EntityFrameworkCore;
 using CityBreaks.Models;
 using CityBreaks.Data;
 
-namespace CityBreaks.Pages.Properties
+namespace CityBreaks.Pages.Properties;
+
+public class IndexModel : PageModel
 {
-    public class IndexModel : PageModel
+    private readonly CityBreaksContext _context;
+
+    public IndexModel(CityBreaksContext context)
     {
-        private readonly CityBreaksContext _context;
+        _context = context;
+    }
 
-        public IndexModel(CityBreaksContext context)
+    public IList<Property> Property { get; set; } = default!;
+
+    public async Task OnGetAsync()
+    {
+        if (_context.Properties != null)
         {
-            _context = context;
-        }
-
-        public IList<Property> Property { get; set; } = default!;
-
-        public async Task OnGetAsync()
-        {
-            if (_context.Properties != null)
-            {
-                Property = await _context.Properties
-                    .Include(p => p.City).ToListAsync();
-            }
+            Property = await _context.Properties
+                .AsNoTracking()
+                .Include(p => p.City)
+                .ToListAsync();
         }
     }
 }
