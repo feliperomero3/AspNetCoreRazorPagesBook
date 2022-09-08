@@ -1,63 +1,63 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using CityBreaks.Data;
 using CityBreaks.Models;
+using CityBreaks.Data;
 
-namespace CityBreaks.Pages.Properties
+namespace CityBreaks.Pages.Properties;
+
+public class DeleteModel : PageModel
 {
-    public class DeleteModel : PageModel
+    private readonly CityBreaksContext _context;
+
+    public DeleteModel(CityBreaksContext context)
     {
-        private readonly CityBreaks.Data.CityBreaksContext _context;
+        _context = context;
+    }
 
-        public DeleteModel(CityBreaks.Data.CityBreaksContext context)
+    [BindProperty]
+    public Property Property { get; set; } = default!;
+
+    public async Task<IActionResult> OnGetAsync(int? id)
+    {
+        if (id == null || _context.Properties == null)
         {
-            _context = context;
+            return NotFound();
         }
 
-        [BindProperty]
-      public Property Property { get; set; } = default!;
+        var property = await _context.Properties
+            .AsNoTracking()
+            .Include(p => p.City)
+            .FirstOrDefaultAsync(m => m.Id == id);
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        if (property == null)
         {
-            if (id == null || _context.Properties == null)
-            {
-                return NotFound();
-            }
-
-            var property = await _context.Properties.FirstOrDefaultAsync(m => m.Id == id);
-
-            if (property == null)
-            {
-                return NotFound();
-            }
-            else 
-            {
-                Property = property;
-            }
-            return Page();
+            return NotFound();
+        }
+        else
+        {
+            Property = property;
         }
 
-        public async Task<IActionResult> OnPostAsync(int? id)
+        return Page();
+    }
+
+    public async Task<IActionResult> OnPostAsync(int? id)
+    {
+        if (id == null || _context.Properties == null)
         {
-            if (id == null || _context.Properties == null)
-            {
-                return NotFound();
-            }
-            var property = await _context.Properties.FindAsync(id);
-
-            if (property != null)
-            {
-                Property = property;
-                _context.Properties.Remove(Property);
-                await _context.SaveChangesAsync();
-            }
-
-            return RedirectToPage("./Index");
+            return NotFound();
         }
+
+        var property = await _context.Properties.FindAsync(id);
+
+        if (property != null)
+        {
+            Property = property;
+            _context.Properties.Remove(Property);
+            await _context.SaveChangesAsync();
+        }
+
+        return RedirectToPage("./Index");
     }
 }

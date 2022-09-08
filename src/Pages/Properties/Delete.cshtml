@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "{id:int}"
 @model CityBreaks.Pages.Properties.DeleteModel
 
 @{
@@ -52,7 +52,7 @@
             @Html.DisplayNameFor(model => model.Property.City)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Property.City.Id)
+            @Html.DisplayFor(model => model.Property.City.Name)
         </dd>
     </dl>
     
