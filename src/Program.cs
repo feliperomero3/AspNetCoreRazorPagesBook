@@ -2,11 +2,16 @@ using System.Globalization;
 using CityBreaks;
 using CityBreaks.Data;
 using CityBreaks.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
 CultureInfo.DefaultThreadCurrentCulture = new("en-US");
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services
+    .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie();
 
 builder.Services.AddRazorPages();
 builder.Services.AddDbContext<CityBreaksContext>(options =>
