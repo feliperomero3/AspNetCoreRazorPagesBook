@@ -11,7 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
     .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-    .AddCookie();
+    .AddCookie(options => options.LoginPath = "/Login");
 
 builder.Services.AddRazorPages();
 builder.Services.AddDbContext<CityBreaksContext>(options =>
@@ -21,7 +21,7 @@ builder.Services.AddDbContext<CityBreaksContext>(options =>
 
 // This middleware is registered in exactly the same way as the conventions-based example,
 // via the UseMiddleware methods or an extension method.
-// But an additional step is also required for IMiddleware based components
+// But an additional step is also required for IMiddleware based components,
 // they must also be registered with the application's service container.
 builder.Services.AddScoped<IPAddressMiddleware>();
 
