@@ -1,10 +1,11 @@
 ﻿using CityBreaks.Data.Configurations;
 using CityBreaks.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace CityBreaks.Data;
 
-public class CityBreaksContext : DbContext
+public class CityBreaksContext : IdentityDbContext
 {
     public CityBreaksContext(DbContextOptions options) : base(options)
     {
@@ -16,6 +17,8 @@ public class CityBreaksContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder);
+
         modelBuilder
             .ApplyConfiguration(new CityConfiguration())
             .ApplyConfiguration(new CountryConfiguration())

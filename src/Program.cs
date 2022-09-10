@@ -1,17 +1,18 @@
 using System.Globalization;
 using CityBreaks;
 using CityBreaks.Data;
+using CityBreaks.Models;
 using CityBreaks.Services;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
 CultureInfo.DefaultThreadCurrentCulture = new("en-US");
 
 var builder = WebApplication.CreateBuilder(args);
 
+// This service registration configures Identity with its default settings.
 builder.Services
-    .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-    .AddCookie(options => options.LoginPath = "/Login");
+    .AddDefaultIdentity<ApplicationUser>()
+    .AddEntityFrameworkStores<CityBreaksContext>();
 
 builder.Services.AddRazorPages();
 builder.Services.AddDbContext<CityBreaksContext>(options =>
