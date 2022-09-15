@@ -42,7 +42,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 // You will probably want to register this middleware after the static files middleware
-// so that it doesn’t log the IP address for the same visitor for every requested file.
+// so that it doesn't log the IP address for the same visitor for every requested file.
 app.UseIPAddress();
 
 app.UseRouting();

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CityBreaks.Data;
 
-public class CityBreaksContext : IdentityDbContext
+public class CityBreaksContext : IdentityDbContext<ApplicationUser>
 {
     public CityBreaksContext(DbContextOptions options) : base(options)
     {
