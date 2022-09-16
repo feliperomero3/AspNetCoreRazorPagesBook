@@ -3,6 +3,7 @@ using CityBreaks;
 using CityBreaks.Data;
 using CityBreaks.Models;
 using CityBreaks.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,6 +23,14 @@ builder.Services
     .AddEntityFrameworkStores<CityBreaksContext>();
 
 builder.Services.AddRazorPages();
+
+builder.Services.AddAuthorization(options =>
+{
+    options.FallbackPolicy = new AuthorizationPolicyBuilder()
+        .RequireAuthenticatedUser()
+        .Build();
+});
+
 builder.Services.AddDbContext<CityBreaksContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));

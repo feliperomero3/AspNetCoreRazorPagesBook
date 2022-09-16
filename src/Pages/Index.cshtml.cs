@@ -18,11 +18,6 @@ public class IndexModel : PageModel
 
     public async Task<ActionResult> OnGet()
     {
-        if (!User.Identity!.IsAuthenticated)
-        {
-            return Challenge();
-        }
-
         Cities = await _cityService.GetAllAsync();
 
         return Page();
