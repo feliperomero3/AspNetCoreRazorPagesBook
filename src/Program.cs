@@ -3,6 +3,7 @@ using CityBreaks;
 using CityBreaks.Data;
 using CityBreaks.Models;
 using CityBreaks.Services;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 
 CultureInfo.DefaultThreadCurrentCulture = new("en-US");
@@ -35,6 +36,7 @@ builder.Services.AddScoped<IPAddressMiddleware>();
 builder.Services.AddTransient<LifetimeDemoService>();
 builder.Services.AddSingleton<SingletonService>();
 builder.Services.AddScoped<CityService>();
+builder.Services.AddTransient<IEmailSender, EmailService>();
 
 var app = builder.Build();
 
