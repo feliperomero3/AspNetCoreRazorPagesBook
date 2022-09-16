@@ -4,6 +4,7 @@ using CityBreaks.Data;
 using CityBreaks.Models;
 using CityBreaks.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,6 +21,7 @@ builder.Services
         options.Password.RequireUppercase = false;
         options.SignIn.RequireConfirmedAccount = true;
     })
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<CityBreaksContext>();
 
 builder.Services.AddRazorPages();

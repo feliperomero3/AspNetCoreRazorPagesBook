@@ -1,0 +1,31 @@
+﻿@page
+@model CityBreaks.Areas.Admin.Pages.Roles.IndexModel
+@{
+    ViewData["Title"] = "Roles ― Admin";
+}
+
+<h1>Roles</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+
+@if (Model.Roles.Any())
+{
+    <table class="table">
+        @foreach (var role in Model.Roles)
+        {
+            <tbody>
+                <tr>
+                    <td>@role.Name</td>
+                </tr>
+            </tbody>
+        }
+    </table>
+}
+else
+{
+    <div class="alert alert-warning">
+        <p>No roles found.</p>
+    </div>
+}
