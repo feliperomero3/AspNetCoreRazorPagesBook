@@ -9,9 +9,14 @@ CultureInfo.DefaultThreadCurrentCulture = new("en-US");
 
 var builder = WebApplication.CreateBuilder(args);
 
-// This service registration configures Identity with its default settings.
 builder.Services
-    .AddDefaultIdentity<ApplicationUser>()
+    .AddDefaultIdentity<ApplicationUser>(options =>
+    {
+        options.Password.RequireDigit = false;
+        options.Password.RequireLowercase = false;
+        options.Password.RequireNonAlphanumeric = false;
+        options.Password.RequireUppercase = false;
+    })
     .AddEntityFrameworkStores<CityBreaksContext>();
 
 builder.Services.AddRazorPages();
