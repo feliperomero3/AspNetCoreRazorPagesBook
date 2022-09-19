@@ -38,6 +38,8 @@ builder.Services.AddDbContext<CityBreaksContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
+builder.Services.AddScoped<CityBreaksContextInitializer>();
+
 // This middleware is registered in exactly the same way as the conventions-based example,
 // via the UseMiddleware methods or an extension method.
 // But an additional step is also required for IMiddleware based components,
@@ -53,8 +55,9 @@ var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
 {
-    var cityBreaksContext = scope.ServiceProvider.GetRequiredService<CityBreaksContext>();
-    cityBreaksContext.Database.EnsureCreated();
+    var initializer = scope.ServiceProvider.GetRequiredService<CityBreaksContextInitializer>();
+    await initializer.Initialize();
+    await initializer.Seed();
 }
 
 app.UseHttpsRedirection();

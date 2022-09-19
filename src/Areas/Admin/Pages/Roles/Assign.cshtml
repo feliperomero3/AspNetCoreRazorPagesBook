@@ -1,0 +1,31 @@
+﻿@page
+@model CityBreaks.Areas.Admin.Pages.Roles.AssignModel
+@{
+    ViewData["Title"] = "Assign Role ― Admin";
+}
+
+<h2>Assign User To Role</h2>
+
+<div class="row">
+    <div class="col-md-8">
+        <form method="post">
+            <div class="mb-3">
+                <label asp-for="SelectedUser" class="form-label"></label>
+                <select asp-for="SelectedUser" asp-items="Model.Users" class="form-select"></select>
+                <span asp-validation-for="SelectedUser" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="SelectedRole" class="form-label"></label>
+                <select asp-for="SelectedRole" asp-items="Model.Roles" class="form-select"></select>
+                <span asp-validation-for="SelectedRole" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <input type="submit" value="Assign" class="btn btn-primary" />
+                <a asp-page="/Roles/Index">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+@section scripts{
+    <partial name="_ValidationScriptsPartial" />
+}
