@@ -1,6 +1,5 @@
 using System.ComponentModel.DataAnnotations;
 using CityBreaks.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -9,7 +8,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CityBreaks.Areas.Admin.Pages.Roles;
 
-[Authorize(Roles = "Admin")]
 public class AssignModel : PageModel
 {
     private readonly UserManager<ApplicationUser> _userManager;

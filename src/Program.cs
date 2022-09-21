@@ -24,13 +24,18 @@ builder.Services
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<CityBreaksContext>();
 
-builder.Services.AddRazorPages();
+builder.Services.AddRazorPages(options =>
+{
+    options.Conventions.AuthorizeAreaFolder("Admin", "/", "AdminPolicy");
+});
 
 builder.Services.AddAuthorization(options =>
 {
     options.FallbackPolicy = new AuthorizationPolicyBuilder()
         .RequireAuthenticatedUser()
         .Build();
+
+    options.AddPolicy("AdminPolicy", builder => builder.RequireRole("Admin"));
 });
 
 builder.Services.AddDbContext<CityBreaksContext>(options =>
