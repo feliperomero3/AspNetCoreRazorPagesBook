@@ -1,8 +1,10 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace CityBreaks.Areas.Admin.Pages.Roles;
 
+[Authorize(Policy = "ViewRolesPolicy")]
 public class IndexModel : PageModel
 {
     private readonly RoleManager<IdentityRole> _roleManager;

@@ -26,7 +26,8 @@ builder.Services
 
 builder.Services.AddRazorPages(options =>
 {
-    options.Conventions.AuthorizeAreaFolder("Admin", "/", "AdminPolicy");
+    options.Conventions.AuthorizeAreaFolder("Admin", "/Claims", "AdminPolicy");
+    //options.Conventions.AuthorizeAreaFolder("Admin", "/Roles", "AdminPolicy");
 });
 
 builder.Services.AddAuthorization(options =>
@@ -36,6 +37,16 @@ builder.Services.AddAuthorization(options =>
         .Build();
 
     options.AddPolicy("AdminPolicy", builder => builder.RequireRole("Admin"));
+
+    options.AddPolicy("ViewRolesPolicy", policyBuilder =>
+        policyBuilder.RequireAssertion(context =>
+        {
+            var joiningDateClaim = context.User.FindFirst(c => c.Type == "Joining Date")?.Value;
+            var joiningDate = Convert.ToDateTime(joiningDateClaim);
+            return context.User.HasClaim("Permission", "View Roles") &&
+                joiningDate > DateTime.MinValue &&
+                joiningDate < DateTime.Now.AddMonths(-6);
+        }));
 });
 
 builder.Services.AddDbContext<CityBreaksContext>(options =>

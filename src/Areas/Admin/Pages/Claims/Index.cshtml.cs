@@ -27,6 +27,6 @@ public class IndexModel : PageModel
         // if you have a lot of data and/or concurrent users.
         // If you ever find yourself needing to iterate over the claims of all users,
         // you should consider writing your own SQL to obtain all the relevant data in one call.
-        Users = await _userManager.Users.ToListAsync();
+        Users = await _userManager.Users.OrderBy(u => u.UserName).ToListAsync();
     }
 }
