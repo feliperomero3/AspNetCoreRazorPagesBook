@@ -2,33 +2,12 @@
 
 namespace CityBreaks.Authorization;
 
-public class ViewRolesRequirement : IAuthorizationRequirement, IAuthorizationHandler
+public class ViewRolesRequirement : IAuthorizationRequirement
 {
-    private readonly int _months;
-
     public ViewRolesRequirement(int months)
     {
-        _months = months;
+        Months = months;
     }
 
-    public Task HandleAsync(AuthorizationHandlerContext context)
-    {
-        var joiningDateClaim = context.User.FindFirst(c => c.Type == "Joining Date")?.Value;
-
-        if (joiningDateClaim == null)
-        {
-            return Task.CompletedTask;
-        }
-
-        var joiningDate = Convert.ToDateTime(joiningDateClaim);
-
-        if (context.User.HasClaim("Permission", "View Roles") &&
-            joiningDate > DateTime.MinValue &&
-            joiningDate < DateTime.Now.AddMonths(_months))
-        {
-            context.Succeed(this);
-        }
-
-        return Task.CompletedTask;
-    }
+    public int Months { get; }
 }
