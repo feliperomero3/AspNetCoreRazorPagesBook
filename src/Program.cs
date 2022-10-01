@@ -1,5 +1,6 @@
 using System.Globalization;
 using CityBreaks;
+using CityBreaks.Authorization;
 using CityBreaks.Data;
 using CityBreaks.Models;
 using CityBreaks.Services;
@@ -39,14 +40,7 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("AdminPolicy", builder => builder.RequireRole("Admin"));
 
     options.AddPolicy("ViewRolesPolicy", policyBuilder =>
-        policyBuilder.RequireAssertion(context =>
-        {
-            var joiningDateClaim = context.User.FindFirst(c => c.Type == "Joining Date")?.Value;
-            var joiningDate = Convert.ToDateTime(joiningDateClaim);
-            return context.User.HasClaim("Permission", "View Roles") &&
-                joiningDate > DateTime.MinValue &&
-                joiningDate < DateTime.Now.AddMonths(-6);
-        }));
+        policyBuilder.AddRequirements(new ViewRolesRequirement(-6)));
 });
 
 builder.Services.AddDbContext<CityBreaksContext>(options =>
