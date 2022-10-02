@@ -28,6 +28,7 @@ public class CityBreaksContextInitializer
         if (!_roleManager.Roles.Any())
         {
             await _roleManager.CreateAsync(new IdentityRole("Admin"));
+            await _roleManager.CreateAsync(new IdentityRole("RoleAdmin"));
             await _roleManager.CreateAsync(new IdentityRole("CityAdmin"));
             await _roleManager.CreateAsync(new IdentityRole("PropertyAdmin"));
         }
@@ -41,6 +42,12 @@ public class CityBreaksContextInitializer
             };
 
             await _userManager.CreateAsync(user1, "password");
+            await _userManager.AddToRoleAsync(user1, "RoleAdmin");
+            await _userManager.AddClaimsAsync(user1, new[]
+                    {
+                        new Claim("Joining Date", DateTime.Today.AddMonths(-4).ToString("yyyy-MM-dd")),
+                        new Claim("Permission", "View Roles")
+                    });
 
             var user2 = new ApplicationUser("anna@test.com")
             {
