@@ -28,7 +28,6 @@ builder.Services
 builder.Services.AddRazorPages(options =>
 {
     options.Conventions.AuthorizeAreaFolder("Admin", "/Claims", "AdminPolicy");
-    //options.Conventions.AuthorizeAreaFolder("Admin", "/Roles", "RoleAdminPolicy");
 });
 
 builder.Services.AddAuthorization(options =>
@@ -41,11 +40,12 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("RoleAdminPolicy", policyBuilder => policyBuilder.RequireRole("RoleAdmin"));
 
     options.AddPolicy("ViewRolesPolicy", policyBuilder =>
-        policyBuilder.AddRequirements(new SeniorityRequirement(6))
+        policyBuilder.AddRequirements(new ViewRolesRequirement(6))
             .RequireClaim("Permission", "View Roles"));
 });
 
-builder.Services.AddSingleton<IAuthorizationHandler, SeniorityRequirementHandler>();
+builder.Services.AddSingleton<IAuthorizationHandler, ViewRolesSeniorityRequirementHandler>();
+builder.Services.AddSingleton<IAuthorizationHandler, ViewRolesIsInRoleRequirimentHandler>();
 
 builder.Services.AddDbContext<CityBreaksContext>(options =>
 {

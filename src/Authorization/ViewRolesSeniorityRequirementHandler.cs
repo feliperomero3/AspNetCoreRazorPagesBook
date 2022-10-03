@@ -2,13 +2,13 @@
 
 namespace CityBreaks.Authorization;
 
-public class SeniorityRequirementHandler : AuthorizationHandler<SeniorityRequirement>
+public class ViewRolesSeniorityRequirementHandler : AuthorizationHandler<ViewRolesRequirement>
 {
     public string? JoiningDateClaimValue { get; private set; }
 
     public int NumberOfMonths { get; private set; }
 
-    protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, SeniorityRequirement requirement)
+    protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, ViewRolesRequirement requirement)
     {
         JoiningDateClaimValue = context.User.FindFirst(c => c.Type == "Joining Date")?.Value;
 
@@ -21,7 +21,7 @@ public class SeniorityRequirementHandler : AuthorizationHandler<SeniorityRequire
 
         var joiningDate = Convert.ToDateTime(JoiningDateClaimValue);
 
-        System.Diagnostics.Debug.WriteLine($"{nameof(SeniorityRequirementHandler)}:JoiningDateClaimValue={JoiningDateClaimValue};NumberOfMonths={NumberOfMonths}");
+        System.Diagnostics.Debug.WriteLine($"{nameof(ViewRolesSeniorityRequirementHandler)}:JoiningDateClaimValue={JoiningDateClaimValue};NumberOfMonths={NumberOfMonths}");
 
         if (joiningDate > DateTime.MinValue && joiningDate < DateTime.Now.AddMonths(-requirement.NumberOfMonths))
         {
@@ -33,6 +33,6 @@ public class SeniorityRequirementHandler : AuthorizationHandler<SeniorityRequire
 
     public override string ToString()
     {
-        return $"{nameof(SeniorityRequirementHandler)}:JoiningDateClaimValue={JoiningDateClaimValue};NumberOfMonths={NumberOfMonths};NotEnoughSeniority";
+        return $"{nameof(ViewRolesSeniorityRequirementHandler)}:JoiningDateClaimValue={JoiningDateClaimValue};NumberOfMonths={NumberOfMonths};NotEnoughSeniority";
     }
 }

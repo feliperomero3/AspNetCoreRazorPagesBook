@@ -4,10 +4,10 @@ namespace CityBreaks.Authorization;
 
 public class ViewRolesRequirement : IAuthorizationRequirement
 {
-    public ViewRolesRequirement(int months)
+    public ViewRolesRequirement(int numberOfMonths)
     {
-        Months = months;
+        NumberOfMonths = numberOfMonths;
     }
 
-    public int Months { get; }
+    public int NumberOfMonths { get; }
 }

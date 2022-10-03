@@ -21,7 +21,7 @@ public class ViewRolesHandler : IAuthorizationHandler
 
                 if (context.User.HasClaim("Permission", "View Roles") &&
                     joiningDate > DateTime.MinValue &&
-                    joiningDate < DateTime.Now.AddMonths(viewRoles.Months))
+                    joiningDate < DateTime.Now.AddMonths(viewRoles.NumberOfMonths))
                 {
                     context.Succeed(viewRoles);
                 }
