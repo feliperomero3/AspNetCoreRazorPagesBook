@@ -6,7 +6,6 @@ public class ApplicationUser : IdentityUser
 {
     public ApplicationUser(string userName) : base(userName)
     {
-        UserName = userName;
     }
 
     public string? FirstName { get; set; }

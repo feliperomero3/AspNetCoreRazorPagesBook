@@ -11,4 +11,6 @@ public class Property
     public DateTime AvailableFrom { get; set; }
     public City? City { get; set; }
     public int CityId { get; set; }
+    public string? CreatorId { get; set; }
+    public ApplicationUser? Creator { get; set; }
 }
