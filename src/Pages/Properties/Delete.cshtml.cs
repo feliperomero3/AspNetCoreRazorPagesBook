@@ -1,18 +1,21 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CityBreaks.Data;
+using CityBreaks.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using CityBreaks.Models;
-using CityBreaks.Data;
 
 namespace CityBreaks.Pages.Properties;
 
 public class DeleteModel : PageModel
 {
     private readonly CityBreaksContext _context;
+    private readonly IAuthorizationService _authorization;
 
-    public DeleteModel(CityBreaksContext context)
+    public DeleteModel(CityBreaksContext context, IAuthorizationService authorization)
     {
         _context = context;
+        _authorization = authorization;
     }
 
     [BindProperty]
@@ -34,10 +37,15 @@ public class DeleteModel : PageModel
         {
             return NotFound();
         }
-        else
+
+        var result = await _authorization.AuthorizeAsync(User, property, "DeletePropertyPolicy");
+
+        if (!result.Succeeded)
         {
-            Property = property;
+            return Forbid();
         }
+
+        Property = property;
 
         return Page();
     }

@@ -42,10 +42,17 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("ViewRolesPolicy", policyBuilder =>
         policyBuilder.AddRequirements(new ViewRolesRequirement(6))
             .RequireClaim("Permission", "View Roles"));
+
+    options.AddPolicy("EditPropertyPolicy", policyBuilder =>
+        policyBuilder.AddRequirements(PropertyOperations.Edit));
+
+    options.AddPolicy("DeletePropertyPolicy", policyBuilder =>
+        policyBuilder.AddRequirements(PropertyOperations.Delete));
 });
 
 builder.Services.AddSingleton<IAuthorizationHandler, ViewRolesSeniorityRequirementHandler>();
 builder.Services.AddSingleton<IAuthorizationHandler, ViewRolesIsInRoleRequirimentHandler>();
+builder.Services.AddSingleton<IAuthorizationHandler, PropertyAuthorizationHandler>();
 
 builder.Services.AddDbContext<CityBreaksContext>(options =>
 {

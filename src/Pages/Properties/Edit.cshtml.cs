@@ -1,20 +1,23 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.ComponentModel.DataAnnotations;
+using CityBreaks.Data;
+using CityBreaks.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using CityBreaks.Data;
-using CityBreaks.Models;
-using System.ComponentModel.DataAnnotations;
 
 namespace CityBreaks.Pages.Properties;
 
 public class EditModel : PageModel
 {
     private readonly CityBreaksContext _context;
+    private readonly IAuthorizationService _authorization;
 
-    public EditModel(CityBreaksContext context)
+    public EditModel(CityBreaksContext context, IAuthorizationService authorization)
     {
         _context = context ?? throw new ArgumentNullException(nameof(context));
+        _authorization = authorization;
     }
 
     [BindProperty(SupportsGet = true)]
@@ -51,9 +54,17 @@ public class EditModel : PageModel
         }
 
         var property = await _context.Properties.FirstOrDefaultAsync(m => m.Id == Id);
+
         if (property == null)
         {
             return NotFound();
+        }
+
+        var result = await _authorization.AuthorizeAsync(User, property, "EditPropertyPolicy");
+
+        if (!result.Succeeded)
+        {
+            return Forbid();
         }
 
         Address = property.Address;
