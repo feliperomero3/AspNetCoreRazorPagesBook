@@ -1,6 +1,7 @@
 ﻿@page
+@using Microsoft.AspNetCore.Authorization;
 @model CityBreaks.Pages.Properties.IndexModel
-
+@inject IAuthorizationService _authorization
 @{
     ViewData["Title"] = "Index";
 }
@@ -14,59 +15,77 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Property[0].Name)
+                @Html.DisplayNameFor(model => model.Properties[0].Name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Property[0].Address)
+                @Html.DisplayNameFor(model => model.Properties[0].Address)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Property[0].MaxNumberOfGuests)
+                @Html.DisplayNameFor(model => model.Properties[0].MaxNumberOfGuests)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Property[0].DayRate)
+                @Html.DisplayNameFor(model => model.Properties[0].DayRate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Property[0].IsSmokingPermitted)
+                @Html.DisplayNameFor(model => model.Properties[0].IsSmokingPermitted)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Property[0].AvailableFrom)
+                @Html.DisplayNameFor(model => model.Properties[0].AvailableFrom)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Property[0].City)
+                @Html.DisplayNameFor(model => model.Properties[0].City)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Property) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Address)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MaxNumberOfGuests)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DayRate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsSmokingPermitted)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AvailableFrom)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.City.Name)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.Properties)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MaxNumberOfGuests)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DayRate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsSmokingPermitted)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AvailableFrom)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.City!.Name)
+                </td>
+                <td>
+                    @{
+                        var editResult = await _authorization.AuthorizeAsync(User, item, "EditPropertyPolicy");
+
+                        if (editResult.Succeeded)
+                        {
+                            <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a>
+
+                            <text> |</text>
+                        }
+
+                        var deleteResult = await _authorization.AuthorizeAsync(User, item, "DeletePropertyPolicy");
+
+                        if (deleteResult.Succeeded)
+                        {
+                            <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+
+                            <text> |</text>
+                        }
+                    }
+                    <a asp-page="./Details" asp-route-id="@item.Id">Details</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
+﻿using CityBreaks.Data;
 using CityBreaks.Models;
-using CityBreaks.Data;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 
 namespace CityBreaks.Pages.Properties;
 
@@ -14,13 +14,13 @@ public class IndexModel : PageModel
         _context = context;
     }
 
-    public IList<Property> Property { get; set; } = default!;
+    public IList<Property> Properties { get; set; } = default!;
 
     public async Task OnGetAsync()
     {
         if (_context.Properties != null)
         {
-            Property = await _context.Properties
+            Properties = await _context.Properties
                 .AsNoTracking()
                 .Include(p => p.City)
                 .ToListAsync();
