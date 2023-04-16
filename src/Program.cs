@@ -1,4 +1,3 @@
-using System.Globalization;
 using CityBreaks;
 using CityBreaks.Authorization;
 using CityBreaks.Data;
@@ -8,8 +7,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
-
-CultureInfo.DefaultThreadCurrentCulture = new("en-US");
 
 var builder = WebApplication.CreateBuilder(args);
 
