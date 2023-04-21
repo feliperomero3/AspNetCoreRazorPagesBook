@@ -8,10 +8,12 @@ namespace CityBreaks.Pages
     public class CityModel : PageModel
     {
         private readonly CityService _cityService;
+        private readonly PropertyService _propertyService;
 
-        public CityModel(CityService cityService)
+        public CityModel(CityService cityService, PropertyService propertyService)
         {
             _cityService = cityService;
+            _propertyService = propertyService;
         }
 
         [BindProperty(SupportsGet = true)]
@@ -29,6 +31,18 @@ namespace CityBreaks.Pages
             }
 
             return Page();
+        }
+
+        public async Task<PartialViewResult> OnGetPropertyDetails(int id)
+        {
+            var property = await _propertyService.GetByIdAsync(id);
+
+            if (property is not null)
+            {
+                return Partial("_PropertyDetailsPartial", property);
+            }
+
+            return Partial("_PropertyDetailsPartial");
         }
     }
 }

@@ -1,0 +1,10 @@
+﻿@model CityBreaks.Models.Property
+
+<h3>@Model.Name</h3>
+<address>
+    @Model.Address
+</address>
+<p>Availability: @(Model.AvailableFrom < DateTime.Now ? "Immediate" : Model.AvailableFrom.ToShortDateString())</p>
+<p>Day Rate: @Model.DayRate.ToString("C")</p>
+<p>Max Guests: @Model.MaxNumberOfGuests</p>
+<p>Smoking permitted? @(Model.IsSmokingPermitted ? "Yes" : "No")</p>

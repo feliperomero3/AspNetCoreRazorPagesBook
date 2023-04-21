@@ -11,9 +11,9 @@ public class CityBreaksContext : IdentityDbContext<ApplicationUser>
     {
     }
 
-    public DbSet<City>? Cities { get; set; }
-    public DbSet<Country>? Countries { get; set; }
-    public DbSet<Property>? Properties { get; set; }
+    public DbSet<City> Cities { get; set; } = null!;
+    public DbSet<Country> Countries { get; set; } = null!;
+    public DbSet<Property> Properties { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

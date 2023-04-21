@@ -67,6 +67,7 @@ builder.Services.AddScoped<IPAddressMiddleware>();
 builder.Services.AddTransient<LifetimeDemoService>();
 builder.Services.AddSingleton<SingletonService>();
 builder.Services.AddScoped<CityService>();
+builder.Services.AddScoped<PropertyService>();
 builder.Services.AddTransient<IEmailSender, EmailService>();
 
 var app = builder.Build();

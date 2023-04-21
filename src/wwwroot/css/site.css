@@ -16,3 +16,8 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+h3, h4, h5 {
+  width: fit-content;
+  width: -moz-fit-content;
+}
