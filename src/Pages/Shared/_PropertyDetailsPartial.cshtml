@@ -1,4 +1,15 @@
-﻿@model CityBreaks.Models.Property
+﻿@using static CityBreaks.Pages.CityModel;
+@model CityBreaks.Models.Property
+
+@{
+    var bookingInputModel = new BookingInputModel
+    {
+        Property = Model,
+        StartDate = DateTime.Today.AddDays(1),
+        EndDate = DateTime.Today.AddDays(2),
+        NumberOfGuests = 1
+    };
+}
 
 <h3>@Model.Name</h3>
 <address>
@@ -8,3 +19,5 @@
 <p>Day Rate: @Model.DayRate.ToString("C")</p>
 <p>Max Guests: @Model.MaxNumberOfGuests</p>
 <p>Smoking permitted? @(Model.IsSmokingPermitted ? "Yes" : "No")</p>
+
+<partial name="_PropertyBookingForm" model="bookingInputModel" />

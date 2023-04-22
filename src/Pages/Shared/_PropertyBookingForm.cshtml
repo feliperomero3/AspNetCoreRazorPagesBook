@@ -1,0 +1,29 @@
+﻿@model CityBreaks.Pages.CityModel.BookingInputModel
+
+@if (Model.Property is null)
+{
+    <div class="alert alert-danger" role="alert">
+        Invalid property.
+    </div>
+}
+else
+{
+    <form id="booking-form" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input asp-for="Property!.Id" type="hidden"/>
+        <div class="mb-3">
+            <label asp-for="StartDate" class="form-label"></label>
+            <input asp-for="StartDate" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label asp-for="EndDate" class="form-label"></label>
+            <input asp-for="EndDate" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label asp-for="NumberOfGuests" class="form-label"></label>
+            <input asp-for="NumberOfGuests" class="form-control" max="@Model.Property.MaxNumberOfGuests" />
+        </div>
+    </form>
+
+    <partial name="_ValidationScriptsPartial" />
+}
