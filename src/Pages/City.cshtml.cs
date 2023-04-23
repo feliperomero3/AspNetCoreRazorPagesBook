@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using System.Net.Mime;
 using CityBreaks.Models;
 using CityBreaks.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -61,29 +60,29 @@ namespace CityBreaks.Pages
             return Partial("_PropertyDetailsPartial");
         }
 
-        public async Task<ContentResult> OnPostBooking(BookingInputModel model)
+        public async Task<JsonResult> OnPostBooking(BookingInputModel model)
         {
             if (!ModelState.IsValid)
             {
-                return Content("Invalid property.");
+                return new JsonResult(new { TotalCost = "Invalid input." });
             }
 
             if (model.Property is null || model.StartDate is null || model.EndDate is null)
             {
-                return Content("$0.00", MediaTypeNames.Text.Plain);
+                return new JsonResult(new { TotalCost = "$0.00" });
             }
 
             var property = await _propertyService.GetByIdAsync(model.Property.Id);
 
             if (property is null)
             {
-                return Content("$0.00", MediaTypeNames.Text.Plain);
+                return new JsonResult(new { TotalCost = "$0.00" });
             }
 
             var numberOfDays = (int)(model.EndDate - model.StartDate).Value.TotalDays;
             var totalCost = numberOfDays * property.DayRate * model.NumberOfGuests;
 
-            return Content(totalCost.ToString("C"), MediaTypeNames.Text.Plain);
+            return new JsonResult(new { TotalCost = totalCost.ToString("C") });
         }
     }
 }

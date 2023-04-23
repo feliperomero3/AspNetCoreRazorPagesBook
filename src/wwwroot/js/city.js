@@ -7,8 +7,8 @@ $(function () {
   });
   $('#book').on('click', function () {
     const data = $('#booking-form').serialize();
-    $.post('?handler=booking', data, function (totalCost) {
-      alert(`Your stay will cost ${totalCost}`);
+    $.post('?handler=booking', data, function (result) {
+      alert(`Your stay will cost ${result.totalCost}`);
     });
   });
 });
