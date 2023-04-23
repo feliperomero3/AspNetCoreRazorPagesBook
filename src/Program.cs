@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
+using static CityBreaks.Pages.CityModel;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -90,4 +91,25 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapRazorPages();
+
+app.MapPost("/properties/booking", async (PropertyService propertyService, BookingInputModel model) =>
+{
+    if (model.Property is null || model.StartDate is null || model.EndDate is null)
+    {
+        return Results.Ok(new { TotalCost = "$0.00" });
+    }
+
+    var property = await propertyService.GetByIdAsync(model.Property.Id);
+
+    if (property is null)
+    {
+        return Results.Ok(new { TotalCost = "$0.00" });
+    }
+
+    var numberOfDays = (int)(model.EndDate - model.StartDate).Value.TotalDays;
+    var totalCost = numberOfDays * property.DayRate * model.NumberOfGuests;
+
+    return Results.Ok(new { TotalCost = totalCost.ToString("C") });
+});
+
 app.Run();

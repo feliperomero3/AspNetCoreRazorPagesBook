@@ -6,9 +6,22 @@ $(function () {
     $('.modal-body').load(`?handler=PropertyDetails&id=${id}`);
   });
   $('#book').on('click', function () {
-    const data = $('#booking-form').serialize();
-    $.post('?handler=booking', data, function (result) {
-      alert(`Your stay will cost ${result.totalCost}`);
+    const data = {
+      startdate: $('#StartDate').val(),
+      enddate: $('#EndDate').val(),
+      numberofguests: $('#NumberOfGuests').val(),
+      property: {
+        id: $('#Property_Id').val()
+      }
+    };
+    $.ajax({
+      url: '/properties/booking',
+      method: "post",
+      contentType: "application/json; charset=utf-8",
+      data: JSON.stringify(data)
+    })
+    .done(function (response) {
+      alert(`Your stay will cost ${response.totalCost}`);
     });
   });
 });
