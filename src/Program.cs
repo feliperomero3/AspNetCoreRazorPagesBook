@@ -69,6 +69,7 @@ builder.Services.AddTransient<LifetimeDemoService>();
 builder.Services.AddSingleton<SingletonService>();
 builder.Services.AddScoped<CityService>();
 builder.Services.AddScoped<PropertyService>();
+builder.Services.AddSingleton<BookingService>();
 builder.Services.AddTransient<IEmailSender, EmailService>();
 
 var app = builder.Build();
@@ -92,7 +93,10 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapRazorPages();
 
-app.MapPost("/properties/booking", async (PropertyService propertyService, BookingInputModel model) =>
+app.MapPost("/properties/booking", async (
+    PropertyService propertyService,
+    BookingService bookingService,
+    BookingInputModel model) =>
 {
     if (model.Property is null || model.StartDate is null || model.EndDate is null)
     {
@@ -106,8 +110,15 @@ app.MapPost("/properties/booking", async (PropertyService propertyService, Booki
         return Results.Ok(new { TotalCost = "$0.00" });
     }
 
-    var numberOfDays = (int)(model.EndDate - model.StartDate).Value.TotalDays;
-    var totalCost = numberOfDays * property.DayRate * model.NumberOfGuests;
+    var booking = new Booking
+    {
+        StartDate = model.StartDate.Value,
+        EndDate = model.EndDate.Value,
+        NumberOfGuests = model.NumberOfGuests,
+        DayRate = property.DayRate
+    };
+
+    var totalCost = bookingService.Calculate(booking);
 
     return Results.Ok(new { TotalCost = totalCost.ToString("C") });
 });
