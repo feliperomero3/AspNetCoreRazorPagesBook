@@ -52,10 +52,10 @@
             @Html.DisplayNameFor(model => model.Property.City)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Property.City.Name)
+            @Html.DisplayFor(model => model.Property.City!.Name)
         </dd>
     </dl>
-    
+
     <form method="post">
         <input type="hidden" asp-for="Property.Id" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |
