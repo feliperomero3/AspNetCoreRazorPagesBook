@@ -82,7 +82,7 @@ using (var scope = app.Services.CreateScope())
 }
 
 app.UseHttpsRedirection();
-app.UseStatusCodePagesWithRedirects("/errors/{0}");
+app.UseStatusCodePagesWithReExecute("/Errors/{0}");
 app.UseStaticFiles();
 
 // You will probably want to register this middleware after the static files middleware
