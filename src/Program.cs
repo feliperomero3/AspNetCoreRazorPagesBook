@@ -49,7 +49,7 @@ builder.Services.AddAuthorization(options =>
 });
 
 builder.Services.AddSingleton<IAuthorizationHandler, ViewRolesSeniorityRequirementHandler>();
-builder.Services.AddSingleton<IAuthorizationHandler, ViewRolesIsInRoleRequirimentHandler>();
+builder.Services.AddSingleton<IAuthorizationHandler, ViewRolesIsInRoleRequirementHandler>();
 builder.Services.AddSingleton<IAuthorizationHandler, PropertyAuthorizationHandler>();
 
 builder.Services.AddDbContext<CityBreaksContext>(options =>

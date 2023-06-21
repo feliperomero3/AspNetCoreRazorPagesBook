@@ -2,7 +2,7 @@
 
 namespace CityBreaks.Authorization;
 
-public class ViewRolesIsInRoleRequirimentHandler : AuthorizationHandler<ViewRolesRequirement>
+public class ViewRolesIsInRoleRequirementHandler : AuthorizationHandler<ViewRolesRequirement>
 {
     protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, ViewRolesRequirement requirement)
     {
