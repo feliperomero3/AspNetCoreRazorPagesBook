@@ -59,10 +59,6 @@ builder.Services.AddDbContext<CityBreaksContext>(options =>
 
 builder.Services.AddScoped<CityBreaksContextInitializer>();
 
-// This middleware is registered in exactly the same way as the conventions-based example,
-// via the UseMiddleware methods or an extension method.
-// But an additional step is also required for IMiddleware based components,
-// they must also be registered with the application's service container.
 builder.Services.AddScoped<IPAddressMiddleware>();
 
 builder.Services.AddTransient<LifetimeDemoService>();
@@ -85,8 +81,6 @@ app.UseHttpsRedirection();
 app.UseStatusCodePagesWithReExecute("/Errors/{0}");
 app.UseStaticFiles();
 
-// You will probably want to register this middleware after the static files middleware
-// so that it doesn't log the IP address for the same visitor for every requested file.
 app.UseIPAddress();
 
 app.UseRouting();
