@@ -10,11 +10,13 @@ namespace CityBreaks.Pages
     {
         private readonly CityService _cityService;
         private readonly PropertyService _propertyService;
+        private readonly ILogger<CityModel> _logger;
 
-        public CityModel(CityService cityService, PropertyService propertyService)
+        public CityModel(CityService cityService, PropertyService propertyService, ILogger<CityModel> logger)
         {
             _cityService = cityService;
             _propertyService = propertyService;
+            _logger = logger;
         }
 
         [BindProperty(SupportsGet = true)]
@@ -42,8 +44,12 @@ namespace CityBreaks.Pages
 
             if (City == null)
             {
+                _logger.LogWarning("City {Name} was not found.", Name);
+
                 return NotFound();
             }
+
+            _logger.LogInformation("City {Name} was found.", Name);
 
             return Page();
         }
