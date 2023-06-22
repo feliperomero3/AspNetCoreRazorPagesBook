@@ -44,12 +44,12 @@ namespace CityBreaks.Pages
 
             if (City == null)
             {
-                _logger.LogWarning("City {Name} was not found.", Name);
+                _logger.LogWarning(404, "City {Name} was not found.", Name);
 
                 return NotFound();
             }
 
-            _logger.LogInformation("City {Name} was found.", Name);
+            _logger.LogInformation(404, "City {Name} was found.", Name);
 
             return Page();
         }
