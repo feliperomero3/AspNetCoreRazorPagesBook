@@ -16,6 +16,8 @@ public class CityService
             .Include(c => c.Country)
             .Include(c => c.Properties.Where(p => p.AvailableFrom < DateTime.Now));
 
+        //throw new ApplicationException("Testing the Email Logger.");
+
         return await cities.ToListAsync();
     }
 

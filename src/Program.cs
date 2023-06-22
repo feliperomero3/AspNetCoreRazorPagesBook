@@ -1,6 +1,7 @@
 using CityBreaks;
 using CityBreaks.Authorization;
 using CityBreaks.Data;
+using CityBreaks.Logging;
 using CityBreaks.Models;
 using CityBreaks.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -67,6 +68,7 @@ builder.Services.AddScoped<CityService>();
 builder.Services.AddScoped<PropertyService>();
 builder.Services.AddSingleton<BookingService>();
 builder.Services.AddTransient<IEmailSender, EmailService>();
+builder.Services.AddTransient<ILoggerProvider, EmailLoggerProvider>();
 
 var app = builder.Build();
 
