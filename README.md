@@ -24,4 +24,4 @@ securing your application and ensuring that it performs well before publishing i
 
 [MIT License](./LICENSE)
 
-Copyright &copy; 2022 Felipe Romero
+Copyright &copy; 2023 Felipe Romero
