@@ -8,9 +8,14 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 using static CityBreaks.Pages.CityModel;
 
+Log.Logger = LoggingConfiguration.CreateLogger();
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.UseSerilog();
 
 builder.Services
     .AddDefaultIdentity<ApplicationUser>(options =>
@@ -55,7 +60,7 @@ builder.Services.AddSingleton<IAuthorizationHandler, PropertyAuthorizationHandle
 
 builder.Services.AddDbContext<CityBreaksContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")!);
 });
 
 builder.Services.AddScoped<CityBreaksContextInitializer>();
@@ -121,3 +126,5 @@ app.MapPost("/properties/booking", async (
 });
 
 app.Run();
+
+Log.CloseAndFlush();
