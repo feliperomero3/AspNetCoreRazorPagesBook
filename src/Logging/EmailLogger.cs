@@ -12,7 +12,7 @@ public class EmailLogger : ILogger
         _emailSender = emailSender;
     }
 
-    public IDisposable BeginScope<TState>(TState state)
+    IDisposable ILogger.BeginScope<TState>(TState state)
     {
         return null!; // This logger will not support scopes.
     }
