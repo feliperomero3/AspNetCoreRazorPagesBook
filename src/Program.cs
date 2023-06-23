@@ -75,6 +75,13 @@ builder.Services.AddSingleton<BookingService>();
 builder.Services.AddTransient<IEmailSender, EmailService>();
 builder.Services.AddTransient<ILoggerProvider, EmailLoggerProvider>();
 
+builder.Services.AddHsts(options =>
+{
+    options.Preload = true;
+    options.IncludeSubDomains = true;
+    options.MaxAge = TimeSpan.FromDays(365);
+});
+
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
@@ -82,6 +89,11 @@ using (var scope = app.Services.CreateScope())
     var initializer = scope.ServiceProvider.GetRequiredService<CityBreaksContextInitializer>();
     await initializer.Initialize();
     await initializer.Seed();
+}
+
+if (app.Environment.IsProduction())
+{
+    app.UseHsts();
 }
 
 app.UseHttpsRedirection();
