@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
-using static CityBreaks.Pages.CityModel;
 
 Log.Logger = LoggingConfiguration.CreateLogger();
 
@@ -107,35 +106,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapRazorPages();
 
-app.MapPost("/properties/booking", async (
-    PropertyService propertyService,
-    BookingService bookingService,
-    BookingInputModel model) =>
-{
-    if (model.Property is null || model.StartDate is null || model.EndDate is null)
-    {
-        return Results.Ok(new { TotalCost = "$0.00" });
-    }
-
-    var property = await propertyService.GetByIdAsync(model.Property.Id);
-
-    if (property is null)
-    {
-        return Results.Ok(new { TotalCost = "$0.00" });
-    }
-
-    var booking = new Booking
-    {
-        StartDate = model.StartDate.Value,
-        EndDate = model.EndDate.Value,
-        NumberOfGuests = model.NumberOfGuests,
-        DayRate = property.DayRate
-    };
-
-    var totalCost = bookingService.Calculate(booking);
-
-    return Results.Ok(new { TotalCost = totalCost.ToString("C") });
-});
+app.MapBookingEndpoints();
 
 app.Run();
 
