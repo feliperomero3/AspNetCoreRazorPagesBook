@@ -23,8 +23,12 @@ public class CreateModel : PageModel
 
     [Required]
     [BindProperty]
+    public string? Description { get; set; }
+
+    [Required]
+    [BindProperty]
     [Display(Name = "City photo")]
-    [UploadFileExtensions(Extensions = ".jpg, .png")]
+    [UploadFileExtensions(Extensions = ".jpeg, .jpg, .png")]
     public IFormFile? UploadedFile { get; set; }
 
     [TempData]
