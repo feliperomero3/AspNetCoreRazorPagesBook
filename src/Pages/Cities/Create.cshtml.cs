@@ -51,7 +51,7 @@ public class CreateModel : PageModel
 
             _logger.LogInformation("filePath is {filePath}", filePath);
 
-            using var stream = System.IO.File.Create(filePath);
+            await using var stream = System.IO.File.Create(filePath);
             await UploadedFile.CopyToAsync(stream);
 
             return RedirectToPage("/Cities/Success");
