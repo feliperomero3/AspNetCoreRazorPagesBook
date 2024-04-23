@@ -4,7 +4,6 @@ using CityBreaks.Data;
 using CityBreaks.Logging;
 using CityBreaks.Models;
 using CityBreaks.Services;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
@@ -33,29 +32,7 @@ builder.Services.AddRazorPages(options =>
     options.Conventions.AuthorizeAreaFolder("Admin", "/Claims", "AdminPolicy");
 });
 
-builder.Services.AddAuthorization(options =>
-{
-    options.FallbackPolicy = new AuthorizationPolicyBuilder()
-        .RequireAuthenticatedUser()
-        .Build();
-
-    options.AddPolicy("AdminPolicy", policyBuilder => policyBuilder.RequireRole("Admin"));
-    options.AddPolicy("RoleAdminPolicy", policyBuilder => policyBuilder.RequireRole("RoleAdmin"));
-
-    options.AddPolicy("ViewRolesPolicy", policyBuilder =>
-        policyBuilder.AddRequirements(new ViewRolesRequirement(6))
-            .RequireClaim("Permission", "View Roles"));
-
-    options.AddPolicy("EditPropertyPolicy", policyBuilder =>
-        policyBuilder.AddRequirements(PropertyOperations.Edit));
-
-    options.AddPolicy("DeletePropertyPolicy", policyBuilder =>
-        policyBuilder.AddRequirements(PropertyOperations.Delete));
-});
-
-builder.Services.AddSingleton<IAuthorizationHandler, ViewRolesSeniorityRequirementHandler>();
-builder.Services.AddSingleton<IAuthorizationHandler, ViewRolesIsInRoleRequirementHandler>();
-builder.Services.AddSingleton<IAuthorizationHandler, PropertyAuthorizationHandler>();
+builder.Services.AddCityBreaksAuthorization();
 
 builder.Services.AddDbContext<CityBreaksContext>(options =>
 {
