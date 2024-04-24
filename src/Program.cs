@@ -4,6 +4,7 @@ using CityBreaks.Data;
 using CityBreaks.Logging;
 using CityBreaks.Models;
 using CityBreaks.Services;
+using Ganss.Xss;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
@@ -50,6 +51,7 @@ builder.Services.AddScoped<PropertyService>();
 builder.Services.AddSingleton<BookingService>();
 builder.Services.AddTransient<IEmailSender, EmailService>();
 builder.Services.AddTransient<ILoggerProvider, EmailLoggerProvider>();
+builder.Services.AddScoped<HtmlSanitizer>();
 
 builder.Services.AddHsts(options =>
 {

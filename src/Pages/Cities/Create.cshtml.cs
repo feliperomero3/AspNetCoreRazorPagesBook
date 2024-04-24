@@ -1,7 +1,9 @@
 using System.ComponentModel.DataAnnotations;
 using CityBreaks.ValidationAttributes;
+using Ganss.Xss;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using IOFile = System.IO.File;
 
 namespace CityBreaks.Pages.Cities;
 
@@ -9,16 +11,18 @@ public class CreateModel : PageModel
 {
     private readonly IWebHostEnvironment _environment;
     private readonly ILogger<CreateModel> _logger;
+    private readonly HtmlSanitizer _sanitizer;
 
-    public CreateModel(IWebHostEnvironment environment, ILogger<CreateModel> logger)
+    public CreateModel(IWebHostEnvironment environment, ILogger<CreateModel> logger, HtmlSanitizer sanitizer)
     {
         _environment = environment;
         _logger = logger;
+        _sanitizer = sanitizer;
     }
 
     [Required]
     [BindProperty]
-    [Display(Name = "City name")]
+    [Display(Name = "Name")]
     public string? CityName { get; set; }
 
     [Required]
@@ -27,16 +31,12 @@ public class CreateModel : PageModel
 
     [Required]
     [BindProperty]
-    [Display(Name = "City photo")]
+    [Display(Name = "Photo")]
     [UploadFileExtensions(Extensions = ".jpeg, .jpg, .png")]
     public IFormFile? UploadedFile { get; set; }
 
     [TempData]
     public string? FileName { get; set; }
-
-    public void OnGet()
-    {
-    }
 
     public async Task<ActionResult> OnPostAsync()
     {
@@ -47,6 +47,8 @@ public class CreateModel : PageModel
 
             TempData["CityName"] = CityName;
 
+            TempData["Description"] = _sanitizer.Sanitize(Description!);
+
             FileName = $"{CityName!.ToLower().Replace(" ", "-")}{Path.GetExtension(UploadedFile.FileName)}";
 
             _logger.LogInformation("FileName is {FileName}", FileName);
@@ -55,11 +57,12 @@ public class CreateModel : PageModel
 
             _logger.LogInformation("filePath is {filePath}", filePath);
 
-            await using var stream = System.IO.File.Create(filePath);
+            await using var stream = IOFile.Create(filePath);
             await UploadedFile.CopyToAsync(stream);
 
             return RedirectToPage("/Cities/Success");
         }
+
         return Page();
     }
 }
