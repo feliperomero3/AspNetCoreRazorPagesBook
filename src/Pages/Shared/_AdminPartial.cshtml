@@ -1,17 +1,28 @@
 ﻿@if (User.Identity!.IsAuthenticated)
 {
-
     <li class="nav-item dropdown">
         <a class="nav-link text-dark dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Admin
         </a>
         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" asp-area="Admin" asp-page="/Roles/Index">Roles</a></li>
-            <li><a class="dropdown-item" asp-area="Admin" asp-page="/Roles/Create">Create role</a></li>
-            <li><a class="dropdown-item" asp-area="Admin" asp-page="/Roles/Assign">Assign role</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" asp-area="Admin" asp-page="/Claims/Index">Claims</a></li>
-            <li><a class="dropdown-item" asp-area="Admin" asp-page="/Claims/Assign">Assign claims</a></li>
+            <li>
+                <a class="dropdown-item" asp-area="Admin" asp-page="/Roles/Index">Roles</a>
+            </li>
+            <li>
+                <a class="dropdown-item" asp-area="Admin" asp-page="/Roles/Create">Create role</a>
+            </li>
+            <li>
+                <a class="dropdown-item" asp-area="Admin" asp-page="/Roles/Assign">Assign role</a>
+            </li>
+            <li>
+                <hr class="dropdown-divider">
+            </li>
+            <li>
+                <a class="dropdown-item" asp-area="Admin" asp-page="/Claims/Index">Claims</a>
+            </li>
+            <li>
+                <a class="dropdown-item" asp-area="Admin" asp-page="/Claims/Assign">Assign claims</a>
+            </li>
         </ul>
     </li>
 }
