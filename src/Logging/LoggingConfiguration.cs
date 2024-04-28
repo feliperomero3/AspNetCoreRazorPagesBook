@@ -5,7 +5,7 @@ using ILogger = Serilog.ILogger;
 
 namespace CityBreaks.Logging;
 
-public class LoggingConfiguration
+public static class LoggingConfiguration
 {
     public static ILogger CreateLogger()
     {
