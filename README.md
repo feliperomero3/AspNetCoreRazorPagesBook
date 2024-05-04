@@ -8,6 +8,7 @@ securing your application and ensuring that it performs well before publishing i
 ## Prerequisites
 
 - Visual Studio 2022
+- .NET SDK 6.0.421
 
 ## Getting started
 
