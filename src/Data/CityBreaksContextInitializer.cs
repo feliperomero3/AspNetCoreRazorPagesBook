@@ -20,13 +20,10 @@ public class CityBreaksContextInitializer
         _roleManager = roleManager;
     }
 
-    public async Task Initialize()
-    {
-        await _context.Database.EnsureCreatedAsync();
-    }
-
     public async Task Seed()
     {
+        await _context.Database.EnsureCreatedAsync();
+
         if (!_roleManager.Roles.Any())
         {
             await _roleManager.CreateAsync(new IdentityRole("Admin"));

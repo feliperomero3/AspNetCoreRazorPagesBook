@@ -65,7 +65,6 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var initializer = scope.ServiceProvider.GetRequiredService<CityBreaksContextInitializer>();
-    await initializer.Initialize();
     await initializer.Seed();
 }
 
