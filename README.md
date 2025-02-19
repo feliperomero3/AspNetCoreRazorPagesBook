@@ -30,4 +30,4 @@ Default user credentials are located in `CityBreaksContextInitializer`.
 
 [MIT License](./LICENSE)
 
-Copyright &copy; 2024 Felipe Romero
+Copyright &copy; 2025 Felipe Romero
