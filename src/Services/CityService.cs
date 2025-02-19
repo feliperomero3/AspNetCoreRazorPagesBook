@@ -22,7 +22,7 @@ public class CityService
 
     public async Task<List<City>> GetAllAsync()
     {
-        var cities = _context.Cities!
+        var cities = _context.Cities
             .Include(c => c.Country)
             .Include(c => c.Properties.Where(p => p.AvailableFrom < DateTime.Now));
 
@@ -33,9 +33,12 @@ public class CityService
 
     public async Task<City?> GetByNameAsync(string name)
     {
-        if (name is null) throw new ArgumentNullException(nameof(name));
+        if (name is null)
+        {
+            throw new ArgumentNullException(nameof(name));
+        }
 
-        return await _context.Cities!
+        return await _context.Cities
             .Include(c => c.Country)
             .Include(c => c.Properties.Where(p => p.AvailableFrom < DateTime.Now))
             .SingleOrDefaultAsync(c => c.Name == name);
@@ -43,9 +46,9 @@ public class CityService
 
     public async Task<List<string>> GetCityNamesAsync()
     {
-        var isCacheHit = _cache.TryGetValue(CityNamesCacheKey, out List<string> cachedCityNames);
+        var isCacheHit = _cache.TryGetValue(CityNamesCacheKey, out List<string>? cachedCityNames);
 
-        if (isCacheHit)
+        if (isCacheHit && cachedCityNames is not null)
         {
             _logger.LogInformation("Returning {Count} city names from cache.", cachedCityNames.Count);
 

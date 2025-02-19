@@ -31,9 +31,11 @@ public class AssignModel : PageModel
 
     public SelectList Users { get; set; } = new(Enumerable.Empty<ApplicationUser>());
 
-    public async void OnGet()
+    public async Task<ActionResult> OnGet()
     {
         await GetOptions();
+
+        return Page();
     }
 
     public async Task<ActionResult> OnPostAsync()
@@ -44,7 +46,7 @@ public class AssignModel : PageModel
 
             var user = await _userManager.FindByIdAsync(SelectedUserId);
 
-            await _userManager.AddClaimAsync(user, claim);
+            await _userManager.AddClaimAsync(user!, claim);
 
             return RedirectToPage("/Claims/Index");
         }

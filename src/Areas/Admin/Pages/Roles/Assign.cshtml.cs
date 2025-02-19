@@ -22,10 +22,10 @@ public class AssignModel : PageModel
     public SelectList Roles { get; set; } = new(Enumerable.Empty<IdentityRole>());
     public SelectList Users { get; set; } = new(Enumerable.Empty<ApplicationUser>());
 
-    [BindProperty, Required, Display(Name = "Role")]
+    [BindProperty] [Required] [Display(Name = "Role")]
     public string? SelectedRole { get; set; }
 
-    [BindProperty, Required, Display(Name = "User")]
+    [BindProperty] [Required] [Display(Name = "User")]
     public string? SelectedUser { get; set; }
 
     public async Task OnGet()
@@ -37,8 +37,8 @@ public class AssignModel : PageModel
     {
         if (ModelState.IsValid)
         {
-            var user = await _userManager.FindByNameAsync(SelectedUser);
-            await _userManager.AddToRoleAsync(user, SelectedRole);
+            var user = await _userManager.FindByNameAsync(SelectedUser!);
+            await _userManager.AddToRoleAsync(user!, SelectedRole!);
             return RedirectToPage("/Roles/Index");
         }
         await GetOptions();
