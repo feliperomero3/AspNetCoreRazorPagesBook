@@ -33,10 +33,7 @@ public class CityService
 
     public async Task<City?> GetByNameAsync(string name)
     {
-        if (name is null)
-        {
-            throw new ArgumentNullException(nameof(name));
-        }
+        ArgumentNullException.ThrowIfNull(name);
 
         return await _context.Cities
             .Include(c => c.Country)
