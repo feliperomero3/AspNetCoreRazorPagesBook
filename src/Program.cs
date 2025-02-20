@@ -43,7 +43,6 @@ builder.Services.AddDbContext<CityBreaksContext>(options =>
 builder.Services.AddScoped<CityBreaksContextInitializer>();
 
 builder.Services.AddScoped<IPAddressMiddleware>();
-
 builder.Services.AddTransient<LifetimeDemoService>();
 builder.Services.AddSingleton<SingletonService>();
 builder.Services.AddScoped<CityService>();
@@ -76,16 +75,12 @@ if (app.Environment.IsProduction())
 app.UseHttpsRedirection();
 app.UseStatusCodePagesWithReExecute("/Errors/{0}");
 app.UseStaticFiles();
-
 app.UseIPAddress();
-
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapRazorPages();
-
 app.MapBookingEndpoints();
-
 app.Run();
 
 Log.CloseAndFlush();
