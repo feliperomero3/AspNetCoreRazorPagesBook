@@ -1,4 +1,4 @@
-﻿namespace CityBreaks;
+﻿namespace CityBreaks.Logging;
 
 // The recommended approach to writing new middleware classes
 // involves implementing the IMiddleware interface.

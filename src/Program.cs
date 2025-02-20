@@ -1,4 +1,3 @@
-using CityBreaks;
 using CityBreaks.Authorization;
 using CityBreaks.Data;
 using CityBreaks.Logging;
