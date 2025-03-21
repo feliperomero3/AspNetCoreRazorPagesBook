@@ -10,9 +10,9 @@ public static class LoggingConfiguration
     public static ILogger CreateLogger()
     {
         return new LoggerConfiguration()
-            .MinimumLevel.Warning()
+            .MinimumLevel.Debug()
             .MinimumLevel.Override("CityBreaks", LogEventLevel.Debug)
-            .MinimumLevel.Override("Microsoft.AspNetCore.Hosting", LogEventLevel.Warning)
+            .MinimumLevel.Override("Microsoft.AspNetCore.Hosting", LogEventLevel.Debug)
             .MinimumLevel.Override("Microsoft.AspNetCore.Identity", LogEventLevel.Debug)
             .MinimumLevel.Override("Microsoft.AspNetCore.Authorization", LogEventLevel.Debug)
             .MinimumLevel.Override("Microsoft.AspNetCore.Authentication", LogEventLevel.Debug)
